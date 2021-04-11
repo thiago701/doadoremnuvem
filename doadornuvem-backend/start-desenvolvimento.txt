@@ -1,0 +1,18 @@
+# instalar ambiente python 3.8 e criar virtualenv
+...
+
+# baixar dependências
+$pip install -r requirements.txt
+
+# docker para banco de dados
+$docker ps -a
+Verificar 'ID' do container mongodb
+$docker start ID
+
+# dashboard para api-rest
+https://github.com/flask-dashboard/Flask-MonitoringDashboard
+$sudo apt-get install python3.8-dev
+$python setup.py install
+
+# aplicação backend (api-rest)
+FLASK_APP=doadornuvem-flask.py flask run

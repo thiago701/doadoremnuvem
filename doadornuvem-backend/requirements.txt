@@ -1,0 +1,9 @@
+#Python==3.8
+Flask==1.1.2
+Flask-Cors==3.0.9
+pymongo==3.11.0
+requests==2.24.0
+dynaconf==3.1.4
+
+# instalar manualmente - ver 'start-desenvolvimento.txt'
+flask_monitoringdashboard==3.1.0

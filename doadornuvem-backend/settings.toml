@@ -1,0 +1,6 @@
+versao = "1.0"
+auto_start_docker_mongodb = true
+container_is_mongodb = "5f3ff68bad5c"
+host_mongodb = "mongodb://localhost:27017/"
+db_mongodb = "doadornuvem"
+collection_mongodb = "historico"
