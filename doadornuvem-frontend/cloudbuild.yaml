@@ -1,10 +1,13 @@
 steps:
 
-  - name: gcr.io/cloud-builders/npm
-    args: [ install ]
+  # Install node packages
+  - name: 'gcr.io/cloud-builders/npm'
+    args: [ 'install' ]
 
-  - name: gcr.io/cloud-builders/npm
-    args: [ run, build, --prod ]
+  # Build productive files
+  - name: 'gcr.io/cloud-builders/npm'
+    args: [ 'run', 'build', '--prod' ]
 
-  - name: gcr.io/cloud-builders/gcloud
-    args: [ app, deploy, --version=$SHORT_SHA ]
+  # Deploy to google cloud app egnine
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['app', 'deploy', '--version=prod']
