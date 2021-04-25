@@ -4,4 +4,5 @@ class MongoDBConf:
     def __init__(self):
         self.host = settings.host_mongodb
         self.db = settings.db_mongodb
-        self.collection = settings.collection_mongodb
+        self.collection_inicio_sistema_log = settings.collection_inicio_sistema_log
+        self.collection_historico = settings.collection_historico

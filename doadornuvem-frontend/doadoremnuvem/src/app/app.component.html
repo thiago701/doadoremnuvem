@@ -1,0 +1,29 @@
+
+<div id="body-content" >
+    <aside id="sidebar">
+        <header class="sidebar-header">
+        <div class="sidebar-header-logo">
+            <img src="assets/img/logo-temp.png" alt="Doador em Nuvem">
+        </div>
+        </header>
+        <nav class="sidebar-nav" *ngIf="mostrarMenu">
+            <ul id="menu">
+                <li class="mn-inicio"><a routerLink="/inicio"><i class="fas fa-home"></i> Início</a></li>
+                <li class="mn-historico"><a routerLink="/historico"><i class="fas fa-history"></i> Histórico</a></li>
+                <li class="mn-usuarios"><a routerLink="/usuarios"><i class="fas fa-user-tie"></i> Usuários</a></li>
+            </ul>
+        </nav>
+
+    </aside>
+
+    <div id="page">
+        <p></p>
+        <app-error-msg></app-error-msg>
+        <router-outlet></router-outlet>
+    </div>
+
+    <div class="menu-icon-bar">
+        <i class="menu-icon fas fa-bars"></i>
+    </div>
+
+</div>

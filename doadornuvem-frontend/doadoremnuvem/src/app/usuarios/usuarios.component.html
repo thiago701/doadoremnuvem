@@ -1,0 +1,66 @@
+<main>
+    <header class="page-header">
+        <h1><i class="fas fa-user-edit"></i> Cadastro de Usuário</h1>
+        <br>
+    </header>
+
+    <article class="page-content">
+        <div class="page-content-card content">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-item ">
+                  <label>Nome Completo</label>
+                  <input [(ngModel)]="usuario.nome" class="form-control required" name="nome" type="">
+                </div>
+              </div>
+                <div class="col-sm-6">
+                    <div class="form-item ">
+                        <label>Perfil</label>
+                        <select [(ngModel)]="usuario.perfil"
+                                class="custom-select" name="perfil" id="perfil">
+                            <option value="ADMIN">Administrador</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-item ">
+                        <label>CPF</label>
+                        <input [(ngModel)]="usuario.documento" class="form-control required" name="documento" type="">
+                    </div>
+                </div>
+              <div class="col-sm-6">
+                <div class="form-item ">
+                  <label>E-mail</label>
+                  <input [(ngModel)]="usuario.email" class="form-control required" name="email" type="email">
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-item ">
+                        <label>Endereço</label>
+                        <input [(ngModel)]="usuario.endereco" class="form-control required" name="endereco" type="text">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-item ">
+                        <label>Telefone</label>
+                        <input [(ngModel)]="usuario.telefone" class="form-control required" name="telefone" type="text">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-item ">
+                        <label>Senha</label>
+                        <input [(ngModel)]="usuario.senha" class="form-control required" name="senha" type="password">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <button (click)="onSubmit()" type="button" class="btn btn-primary bt-page"><i class="fas fa-save"></i> Salvar</button>
+
+</main>

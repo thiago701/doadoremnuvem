@@ -1,0 +1,35 @@
+<main>
+  <header class="page-header">
+    <h1>Login</h1>
+  </header>
+
+  <p-toast></p-toast>
+
+  <article class="page-content">
+    <div class="page-content-card content">
+      <div class="row">
+        <div class="input-field col-sm-12">
+          <div class="form-item">
+            <input type="text" id="login"  [(ngModel)]="usuario.nome" class="fadeIn second form-control" name="login" placeholder="Usuário">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col-sm-12">
+          <div class="form-item">
+            <input type="password" [(ngModel)]="usuario.senha" id="password" class="fadeIn third form-control" name="login" placeholder="Senha">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <button type="submit" class="btn btn-primary" (click)="fazerLogin()"><i class="fas fa-user"></i> Entrar</button>
+        </div>
+      </div>
+
+    </div>
+  </article>
+
+
+
+</main>

@@ -1,0 +1,40 @@
+<header class="page-header">
+  <h1><i class="fas fa-user"></i> Lista de Usuários</h1>
+</header>
+
+<article class="page-content">
+
+    <div class="page-content-card content">
+
+        <table *ngIf="usuarios.length > 0" class="table">
+            <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Nome</th>
+              <th scope="col">E-MAIL</th>
+              <th scope="col">PERFIL</th>
+              <th scope="col">CPF/CNPJ</th>
+              <th scope="col">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let u of usuarios; index as i">
+              <th scope="row">{{ u.id }}</th>
+              <td>{{ u.nome }}</td>
+              <td>{{ u.email }}</td>
+              <td>{{ u.perfil }}</td>
+              <td>{{ u.documento }}</td>
+              <td>
+                <a type="button" class="far fa-edit" routerLink="/usuarios/editar/{{u.id}}">Editar</a>
+                &nbsp;
+                <a type="button" class="far fa-trash-alt" (click)="excluirUsuario(u)"
+                    routerLink="/usuarios"> Excluir </a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+          <p class="line-add-button"><a routerLink="/cadastro-usuario" title=""><i class="fas fa-plus-circle"></i> Adicionar Usuário</a></p>
+    </div>
+
+</article>
