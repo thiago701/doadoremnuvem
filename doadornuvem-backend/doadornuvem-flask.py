@@ -53,7 +53,7 @@ print('sistema/versão:', __sistema__)
 
 
 # Historico
-@app.route('/api/historico/salvar', methods=['GET'])
+@app.route('/api/historico/salvar', methods=['GET', 'POST'])
 def salvarHistorico():
     msg = ''
     print('salvarHistorico...')
