@@ -60,7 +60,10 @@ def salvarHistorico():
     try:
         if mongoDBonline:
             # executa metodo principal
-            print('dados req:', request.data)
+            print('request-status:', request.args.get("status"))
+            print('request-tp_operacao:', request.args.get("tp_operacao"))
+            print('request-ds_log:', request.args.get("ds_log"))
+            print('request-qt_doadores_notificados:', request.args.get("qt_doadores_notificados"))
             if testeParametrosHistorico(request):
                 msg = 'Parametros nulos'
             else:
