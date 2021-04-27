@@ -4,7 +4,7 @@ export class Usuario {
   senha: string;
   email: string;
   perfil: string;
-  documento: string;
+  cpf: string;
   endereco: string;
   telefone: string;
   cadastro: string;

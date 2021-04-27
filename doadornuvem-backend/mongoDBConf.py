@@ -6,3 +6,4 @@ class MongoDBConf:
         self.db = settings.db_mongodb
         self.collection_inicio_sistema_log = settings.collection_inicio_sistema_log
         self.collection_historico = settings.collection_historico
+        self.collection_usuario = settings.collection_usuario

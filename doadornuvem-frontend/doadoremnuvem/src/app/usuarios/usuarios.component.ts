@@ -22,6 +22,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.usuario);
     this.usuarioService.salvarUsuario(this.usuario).subscribe(
       (data) => {
       },
@@ -40,6 +41,11 @@ export class UsuariosComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+
+  preparaEditarUsuario(usuario: Usuario) {
+
   }
 
 

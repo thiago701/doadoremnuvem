@@ -25,9 +25,7 @@
         <td>{{ h.qt_doadores_notificados }}</td>
         <td>{{ h.ds_log }}</td>
         <td>
-          &nbsp;
-          <a type="button" class="far fa-repeat-all" (click)="reprocessarFalha(h)" *ngIf="h.status === 'FALHA'"
-             routerLink="#"> Repetir </a>
+          <button type="button" class="btn btn-warning" routerLink="/historico" *ngIf="h.status === 'FALHA'" (click)="reprocessarFalha(h)"><i class="fas fa-reply-all"></i> Repetir</button>
         </td>
       </tr>
       </tbody>
