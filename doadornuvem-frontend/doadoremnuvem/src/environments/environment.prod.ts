@@ -3,7 +3,7 @@ export const environment = {
 
   // API
   // API
-  apiUrl: 'http://10.128.0.2:5000/api',
+  apiUrl: 'http://35.226.20.56:5000/api',
   get_historico_listar: '/historico/listar',
 
   get_usuarios_listar: '/usuarios/listar',
