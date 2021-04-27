@@ -2,6 +2,13 @@ export const environment = {
   production: true,
 
   // API
-  apiUrl: 'http://localhost:5000/api',
+  // API
+  apiUrl: 'http://10.128.0.2:5000/api',
+  get_historico_listar: '/historico/listar',
+
+  get_usuarios_listar: '/usuarios/listar',
+  post_usuarios_salvar: '/usuarios/salvar',
+  post_usuarios_editar: '/usuarios/editar',
+  post_usuarios_excluir: '/usuarios/excluir',
 
 };
