@@ -23,18 +23,17 @@
               <td>{{ u.nome }}</td>
               <td>{{ u.email }}</td>
               <td>{{ u.perfil }}</td>
-              <td>{{ u.documento }}</td>
+              <td>{{ u.cpf }}</td>
               <td>
-                <a type="button" class="far fa-edit" routerLink="/usuarios/editar/{{u.id}}">Editar</a>
+                <!--button type="button" class="btn btn-dark" routerLink="/usuarios/editar/{{u.cpf}}"><i class="fas fa-edit"></i> Editar</button-->
                 &nbsp;
-                <a type="button" class="far fa-trash-alt" (click)="excluirUsuario(u)"
-                    routerLink="/usuarios"> Excluir </a>
+                <button type="button" class="btn btn-danger" routerLink="/usuarios" (click)="excluirUsuario(u)"><i class="fas fa-trash-alt"></i> Excluir</button>
               </td>
             </tr>
             </tbody>
           </table>
 
-          <p class="line-add-button"><a routerLink="/cadastro-usuario" title=""><i class="fas fa-plus-circle"></i> Adicionar Usuário</a></p>
+          <p class="line-add-button"><button type="button" class="btn btn-primary" routerLink="/cadastro-usuario"><i class="fas fa-plus"></i>  Adicionar</button></p>
     </div>
 
 </article>

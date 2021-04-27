@@ -14,6 +14,14 @@ export class ListarUsuariosComponent implements OnInit {
   constructor(private usuarioService: UsuarioService) { }
 
   ngOnInit(): void {
+    this.listarUsuarios();
+    // Seta uma classe no BODY para controle de interface
+    const body = document.getElementsByTagName('body')[0];
+    body.className = '';
+    body.classList.add('page-usuarios'); // page.sass + style.css
+  }
+
+  listarUsuarios() {
     this.usuarioService.listarUsuarios().subscribe(
       (data) => {
         this.usuarios = data;
@@ -22,14 +30,15 @@ export class ListarUsuariosComponent implements OnInit {
         console.log(err);
       }
     );
-    // Seta uma classe no BODY para controle de interface
-    const body = document.getElementsByTagName('body')[0];
-    body.className = '';
-    body.classList.add('page-usuarios'); // page.sass + style.css
+  }
+
+  editarUsuario(usuario: Usuario) {
+    this.usuarioService.editarUsuario(usuario).subscribe(data => {});
   }
 
   excluirUsuario(usuario: Usuario) {
-    // TODO
+    this.usuarioService.excluirUsuario(usuario).subscribe(data => {});
+    this.listarUsuarios();
   }
 
 
