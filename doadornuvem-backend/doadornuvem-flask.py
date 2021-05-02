@@ -235,7 +235,6 @@ def buscarUsuarioByCpf():
     except Exception as e:
         logging.error(e)
         raise Exception("Usuário não encontrado")
-
     return respostaUsuarioJson(usuarioEdicao)
 
 # TODO melhorar
