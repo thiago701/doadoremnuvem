@@ -228,6 +228,22 @@ def listarUsuarios():
         raise Exception("Ocorreu um erro geral!")
     return respostaUsuarioJson(lista)
 
+# Usuario By CPF
+@app.route('/api/usuarios/listarbycpf', methods=['GET'])
+def buscarUsuarioByCpf():
+    try:
+        if mongoDBonline:
+            if request.args.get("cpf") is None:
+                msg = 'Parametros nulos'
+                return msg, 400
+            else:
+                usuarioEdicao = buscarUsuarioPorCpfBD(int(request.args.get("cpf")), MongoDBConf())
+
+    except Exception as e:
+        logging.error(e)
+        raise Exception("Usuário não encontrado")
+    return respostaUsuarioJson(usuarioEdicao)
+
 # Doador Listar
 @app.route('/api/doadores/')
 @app.route('/api/doadores/listar', methods=['GET'])
