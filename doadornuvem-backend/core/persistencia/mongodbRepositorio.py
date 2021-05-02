@@ -56,28 +56,85 @@ def editarUsuarioBD(nome, perfil, cpf, email, endereco, telefone, senha, mongodb
         'senha': senha
     }
     # salvar na coleção
-    id_doc = editarDocumento(con, docNovo, mongodb.collection_usuario)
+    id_doc = editarDocumentoUsuario(con, docNovo, mongodb.collection_usuario)
     print('editado no mongodb: ', id_doc)
+
+
+def salvarDoadorBD(registro, nome, dt_cadastro, cidade,
+                   bairro, grupoabo, fatorrh, fone, celular, sexo,
+                   dt_nascimento, dt_ultima_doacao, dt_proximo_doacao, mongodb):
+    # mongodb
+    con = conexaoBanco(mongodb)
+    # cria documento formato json
+    docNovo = {
+        'registro': registro,
+        'nome': nome,
+        'dtreg': dt_cadastro,
+        'cidade': cidade,
+        'bairro': bairro,
+        'grupoabo': grupoabo,
+        'fatorrh': fatorrh,
+        'fone': fone,
+        'celular': celular,
+        'sexo': sexo,
+        'dtnasc': dt_nascimento,
+        'data_ultima_doacao': dt_ultima_doacao,
+        'data_proxima_doacao': dt_proximo_doacao
+    }
+    # salvar na coleção
+    id_doc = inserirDocumento(con, docNovo, mongodb.collection_doador)
+    print('salvo no mongodb: ', id_doc)
+
+
+def editarDoadorBD(registro, nome, dt_cadastro, cidade,
+                   bairro, grupoabo, fatorrh, fone, celular, sexo,
+                   dt_nascimento, dt_ultima_doacao, dt_proximo_doacao, mongodb):
+    # mongodb
+    con = conexaoBanco(mongodb)
+    # cria documento formato json
+    docNovo = {
+        'registro': registro,
+        'nome': nome,
+        'dtreg': dt_cadastro,
+        'cidade': cidade,
+        'bairro': bairro,
+        'grupoabo': grupoabo,
+        'fatorrh': fatorrh,
+        'fone': fone,
+        'celular': celular,
+        'sexo': sexo,
+        'dtnasc': dt_nascimento,
+        'data_ultima_doacao': dt_ultima_doacao,
+        'data_proxima_doacao': dt_proximo_doacao
+    }
+    # salvar na coleção
+    id_doc = editarDocumentoUsuario(con, docNovo, mongodb.collection_doador)
+    print('editado no mongodb: ', id_doc)
+
 
 def listarHistoricoBD(mongodb):
     con = conexaoBanco(mongodb)
     collection = con[mongodb.collection_historico]
     return list(collection.find())
 
+
 def listarUsuariosBD(mongodb):
     con = conexaoBanco(mongodb)
     collection = con[mongodb.collection_usuario]
     return list(collection.find())
+
 
 def buscarUsuarioPorCpfBD(cpf, mongodbConfig):
     db = conexaoBanco(mongodbConfig)
     collection = db[mongodbConfig.collection_usuario]
     return list(collection.find({'cpf': int(cpf)}))
 
+
 def excluirUsuarioBD(cpf, mongodbConfig):
     db = conexaoBanco(mongodbConfig)
     collection = db[mongodbConfig.collection_usuario]
     collection.delete_one({"cpf": int(cpf)})
+
 
 def salvarInicioSistemaLog(json, mongodb):
     # mongodb
@@ -97,7 +154,8 @@ def inserirDocumento(banco, doc, collection):
     id = servico.insert_one(doc).inserted_id
     return id
 
-def editarDocumento(banco, docNovo, collection):
+
+def editarDocumentoUsuario(banco, docNovo, collection):
     print('docNovo', docNovo)
     servico = banco[collection]
     id = servico.update_one({"cpf": docNovo["cpf"]},
@@ -110,6 +168,7 @@ def editarDocumento(banco, docNovo, collection):
                                       "senha": docNovo["senha"]}}, upsert=True)
     return id
 
+
 def excluirDocumento(banco, filtro):
     historico = banco.historico
     historico.delete_one(filtro);
@@ -118,6 +177,7 @@ def excluirDocumento(banco, filtro):
 def buscarDocumento(historico):
     doc_encontrado = historico.find_one()
     print(doc_encontrado)
+
 
 def conexaoBanco(mongodb):
     cliente = MongoClient(mongodb.host)
