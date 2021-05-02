@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 import datetime
+import re
 
 FORMATO_DATA = '%Y-%m-%d %H:%M:%S'
 
@@ -143,7 +144,16 @@ def listarDoadoresBD(mongodb):
 def listarDoadoresPorTipoBD(grupo, fator, mongodb):
     con = conexaoBanco(mongodb)
     collection = con[mongodb.collection_doador]
-    return list(collection.find({'grupoabo': grupo, 'fatorrh': fator}))
+    rgxGrupo = re.compile('.*'+grupo+'.*', re.IGNORECASE)
+    rgxFator = re.compile('.*'+fator+'.*', re.IGNORECASE)
+    return list(collection.find({'grupoabo': rgxGrupo, 'fatorrh': rgxFator}))
+
+def listarDoadoresPorLocalidadeBD(cidade, bairro, mongodb):
+    con = conexaoBanco(mongodb)
+    collection = con[mongodb.collection_doador]
+    rgxCidade = re.compile('.*'+cidade+'.*', re.IGNORECASE)
+    rgxBairro = re.compile('.*'+bairro+'.*', re.IGNORECASE)
+    return list(collection.find({'cidade': rgxCidade, 'bairro': rgxBairro}))
 
 def salvarInicioSistemaLog(json, mongodb):
     # mongodb

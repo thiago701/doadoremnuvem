@@ -244,13 +244,28 @@ def listarDoadores():
         raise Exception("Ocorreu um erro geral!")
     return respostaDoadorJson(lista)
 
-# Doador Listar
+# Doador Listar por tipo
 @app.route('/api/doadores/listar-por-tipo/<grupoabo>/<fatorrh>', methods=['GET'])
 def listarDoadoresPorTipo(grupoabo, fatorrh):
     try:
         if (mongoDBonline):
             # executa metodo principal
             lista = listarDoadoresPorTipoBD(grupoabo, fatorrh, MongoDBConf())
+        else:
+            print('mongodb: offline')
+            raise Exception('Falha de comunicação com mongodb!')
+    except Exception as e:
+        logging.error(e)
+        raise Exception("Ocorreu um erro geral!")
+    return respostaDoadorJson(lista)
+
+# Doador Listar por localidade
+@app.route('/api/doadores/listar-por-localidade/<cidade>/<bairro>', methods=['GET'])
+def listarDoadoresPorLocalidade(cidade, bairro):
+    try:
+        if (mongoDBonline):
+            # executa metodo principal
+            lista = listarDoadoresPorLocalidadeBD(cidade, bairro, MongoDBConf())
         else:
             print('mongodb: offline')
             raise Exception('Falha de comunicação com mongodb!')
