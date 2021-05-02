@@ -135,6 +135,15 @@ def excluirUsuarioBD(cpf, mongodbConfig):
     collection = db[mongodbConfig.collection_usuario]
     collection.delete_one({"cpf": int(cpf)})
 
+def listarDoadoresBD(mongodb):
+    con = conexaoBanco(mongodb)
+    collection = con[mongodb.collection_doador]
+    return list(collection.find())
+
+def listarDoadoresPorTipoBD(grupo, fator, mongodb):
+    con = conexaoBanco(mongodb)
+    collection = con[mongodb.collection_doador]
+    return list(collection.find({'grupoabo': grupo, 'fatorrh': fator}))
 
 def salvarInicioSistemaLog(json, mongodb):
     # mongodb
