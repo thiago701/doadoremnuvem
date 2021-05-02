@@ -10,8 +10,10 @@ import { UsuarioService } from '../usuario.service';
 export class ListarUsuariosComponent implements OnInit {
 
   public usuarios: Array<Usuario> = [];
+  public usuario : Usuario = new Usuario();
 
-  constructor(private usuarioService: UsuarioService) { }
+  constructor(
+    private usuarioService: UsuarioService) { }
 
   ngOnInit(): void {
     this.listarUsuarios();
@@ -40,6 +42,4 @@ export class ListarUsuariosComponent implements OnInit {
     this.usuarioService.excluirUsuario(usuario).subscribe(data => {});
     this.listarUsuarios();
   }
-
-
 }
