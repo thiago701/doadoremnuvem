@@ -239,6 +239,14 @@ body.page-inicio nav.sidebar-nav ul li.mn-inicio {
     color: #fff;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); }
 
+body.page-doadores nav.sidebar-nav ul li.mn-doadores {
+  background: #87ceeb; }
+body.page-doadores nav.sidebar-nav ul li.mn-doadores:hover {
+  background: #d51d1d; }
+body.page-doadores nav.sidebar-nav ul li.mn-doadores a {
+  color: #fff;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); }
+
 body.page-usuarios nav.sidebar-nav ul li.mn-usuarios {
   background: #87ceeb; }
   body.page-usuarios nav.sidebar-nav ul li.mn-usuarios:hover {
@@ -254,6 +262,14 @@ body.page-historico nav.sidebar-nav ul li.mn-historico {
   body.page-historico nav.sidebar-nav ul li.mn-historico a {
     color: #fff;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); }
+
+body.page-mensagens nav.sidebar-nav ul li.mn-mensagens {
+  background: #87ceeb; }
+body.page-mensagens nav.sidebar-nav ul li.mn-mensagens:hover {
+  background: #d51d1d; }
+body.page-mensagens nav.sidebar-nav ul li.mn-mensagens a {
+  color: #fff;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); }
 
 article.page-content form .row div[class*=col] {
   padding-bottom: 10px; }

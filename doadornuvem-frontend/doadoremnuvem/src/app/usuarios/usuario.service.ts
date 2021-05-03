@@ -8,8 +8,7 @@ import { Usuario } from '../login/usuario';
   providedIn: 'root'
 })
 export class UsuarioService {
-  
-  public Usuario : Usuario = new Usuario();
+
   constructor(private http: HttpClient) { }
 
   listarUsuarios(): Observable<Array<Usuario>> {
@@ -51,12 +50,11 @@ export class UsuarioService {
     return this.http.get(url, options);
   }
 
-  getUsuarioByCpf(cpf:string){
-    const options ={
+  getUsuarioByCpf(cpf: string) {
+    const options = {
       params: new HttpParams().set('cpf', cpf)
     };
     const url = environment.apiUrl + environment.get_usuario_by_cpf;
     return this.http.get(url, options);
   }
-    
 }
