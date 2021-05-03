@@ -9,5 +9,5 @@ export const environment = {
   post_usuarios_salvar: '/usuarios/salvar',
   post_usuarios_editar: '/usuarios/editar',
   post_usuarios_excluir: '/usuarios/excluir',
-
+  get_usuario_by_cpf: '/usuarios/listarbycpf',
 };
