@@ -260,6 +260,21 @@ def listarDoadores():
         raise Exception("Ocorreu um erro geral!")
     return respostaDoadorJson(lista)
 
+# Doador editar permissão de notificação
+@app.route('/api/doadores/editar-permissao-notificacao/<registro>/<valor>', methods=['GET'])
+def atualizarPermissaoNotificacaoDoador(registro, valor):
+    try:
+        if (mongoDBonline):
+            # executa metodo principal
+            editarNotificacaoDoadorBD(registro, str_to_bool(valor), MongoDBConf())
+        else:
+            print('mongodb: offline')
+            raise Exception('Falha de comunicação com mongodb!')
+    except Exception as e:
+        logging.error(e)
+        raise Exception("Ocorreu um erro geral!")
+    return jsonify('Atualizado a permissão de notificação.')
+
 # Doador Listar por tipo
 @app.route('/api/doadores/listar-por-tipo/<grupoabo>/<fatorrh>', methods=['GET'])
 def listarDoadoresPorTipo(grupoabo, fatorrh):
@@ -289,6 +304,37 @@ def listarDoadoresPorLocalidade(cidade, bairro):
         logging.error(e)
         raise Exception("Ocorreu um erro geral!")
     return respostaDoadorJson(lista)
+
+# Mensagens para notificação
+@app.route('/api/mensagens/editar-mensagens-notificacao/<msg_geral>/<msg_tipo>/<msg_localidade>', methods=['GET'])
+def atualizarMensagensNotificacao(msg_geral, msg_tipo, msg_localidade):
+    try:
+        if (mongoDBonline):
+            # executa metodo principal
+            editarMensagensBD(msg_geral, msg_tipo, msg_localidade, MongoDBConf())
+        else:
+            print('mongodb: offline')
+            raise Exception('Falha de comunicação com mongodb!')
+    except Exception as e:
+        logging.error(e)
+        raise Exception("Ocorreu um erro geral!")
+    return jsonify('Atualizado as mensagens de notificação.')
+
+# Mensagens para notificação
+@app.route('/api/mensagens/')
+@app.route('/api/mensagens/listar', methods=['GET'])
+def listarMensagens():
+    try:
+        if (mongoDBonline):
+            # executa metodo principal
+            lista = listarMensagensBD(MongoDBConf())
+        else:
+            print('mongodb: offline')
+            raise Exception('Falha de comunicação com mongodb!')
+    except Exception as e:
+        logging.error(e)
+        raise Exception("Ocorreu um erro geral!")
+    return respostaMensagemJson(lista)
 
 # TODO melhorar
 def respostaHistoricoJson(lista):
@@ -335,10 +381,28 @@ def respostaDoadorJson(lista):
             'sexo': r['sexo'].strip() if not r['sexo'] is None else '',
             'dtnasc': r['dtnasc'].strip() if not r['dtnasc'] is None else '',
             'data_ultima_doacao': r['data_ultima_doacao'].strip(),
-            'data_proxima_doacao': r['data_proxima_doacao'].strip()
+            'data_proxima_doacao': r['data_proxima_doacao'].strip(),
+            'permissao_notificacao': r['permissao_notificacao']
         })
     return jsonify(resposta)
 
+# TODO melhorar
+def respostaMensagemJson(lista):
+    resposta = list()
+    for r in lista:
+        resposta.append({'msg_notifica_geral': r['msg_notifica_geral'],
+                         'msg_notifica_por_tipo': r['msg_notifica_por_tipo'],
+                         'msg_notifica_por_localidade': r['msg_notifica_por_localidade']
+                         })
+    return jsonify(resposta)
+
+def str_to_bool(s):
+    if s == 'true':
+         return True
+    elif s == 'false':
+         return False
+    else:
+         raise ValueError
 
 # Status
 @app.route('/', methods=['GET'])

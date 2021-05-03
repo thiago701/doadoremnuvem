@@ -10,4 +10,11 @@ export const environment = {
   post_usuarios_editar: '/usuarios/editar',
   post_usuarios_excluir: '/usuarios/excluir',
   get_usuario_by_cpf: '/usuarios/listarbycpf',
+
+  get_doador_listar: '/doadores/listar',
+  get_permissao_notificao: '/doadores/editar-permissao-notificacao/',
+
+  get_mensagem_listar: '/mensagens/listar',
+  get_atualizar_mensagem: '/mensagens/editar-mensagens-notificacao/',
+
 };

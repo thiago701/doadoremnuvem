@@ -109,9 +109,28 @@ def editarDoadorBD(registro, nome, dt_cadastro, cidade,
         'data_proxima_doacao': dt_proximo_doacao
     }
     # salvar na coleção
-    id_doc = editarDocumentoUsuario(con, docNovo, mongodb.collection_doador)
-    print('editado no mongodb: ', id_doc)
+    #id_doc = editarDocumentoDoador(con, docNovo, mongodb.collection_doador)
+    #print('editado no mongodb: ', id_doc)
 
+def editarNotificacaoDoadorBD(registro, permissao, mongodb):
+    # mongodb
+    con = conexaoBanco(mongodb)
+    print('atualizando permissao de notificacao:', registro, permissao)
+    # salvar na coleção
+    servico = con[mongodb.collection_doador]
+    id = servico.update_one({"registro": registro},
+                            {"$set": {"permissao_notificacao": permissao}}, upsert=True)
+
+def editarMensagensBD(msg_geral, msg_tipo, msg_localidade, mongodb):
+    # mongodb
+    con = conexaoBanco(mongodb)
+    print('atualizando mensagens de notificacao:', msg_geral, msg_tipo, msg_localidade)
+    # salvar na coleção
+    servico = con[mongodb.collection_mensagem]
+    id = servico.update({},
+                            {"$set": {"msg_notifica_geral": msg_geral,
+                                      'msg_notifica_por_tipo': msg_tipo,
+                                      'msg_notifica_por_localidade': msg_localidade}}, upsert=True)
 
 def listarHistoricoBD(mongodb):
     con = conexaoBanco(mongodb)
@@ -123,7 +142,6 @@ def listarUsuariosBD(mongodb):
     con = conexaoBanco(mongodb)
     collection = con[mongodb.collection_usuario]
     return list(collection.find())
-
 
 def buscarUsuarioPorCpfBD(cpf, mongodbConfig):
     db = conexaoBanco(mongodbConfig)
@@ -139,7 +157,7 @@ def excluirUsuarioBD(cpf, mongodbConfig):
 def listarDoadoresBD(mongodb):
     con = conexaoBanco(mongodb)
     collection = con[mongodb.collection_doador]
-    return list(collection.find())
+    return list(collection.find())[0:100]
 
 def listarDoadoresPorTipoBD(grupo, fator, mongodb):
     con = conexaoBanco(mongodb)
@@ -154,6 +172,11 @@ def listarDoadoresPorLocalidadeBD(cidade, bairro, mongodb):
     rgxCidade = re.compile('.*'+cidade+'.*', re.IGNORECASE)
     rgxBairro = re.compile('.*'+bairro+'.*', re.IGNORECASE)
     return list(collection.find({'cidade': rgxCidade, 'bairro': rgxBairro}))
+
+def listarMensagensBD(mongodb):
+    con = conexaoBanco(mongodb)
+    collection = con[mongodb.collection_mensagem]
+    return list(collection.find())
 
 def salvarInicioSistemaLog(json, mongodb):
     # mongodb

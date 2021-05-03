@@ -23,6 +23,7 @@
     "@angular/router": "^9.1.12",
     "@fortawesome/fontawesome-free": "^5.15.1",
     "@fullcalendar/core": "^4.4.2",
+    "angular-pipes": "^10.0.0",
     "bootstrap": "^4.5.3",
     "chart.js": "^2.9.4",
     "console-stamp": "^0.2.9",
