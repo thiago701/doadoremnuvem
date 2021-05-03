@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
+import { data } from 'jquery';
 import { Usuario } from '../login/usuario';
 import { UsuarioService } from './usuario.service';
 
@@ -13,14 +15,17 @@ export class UsuariosComponent implements OnInit {
   public tipoCadastro: any;
   public usuarios: Array<Usuario>;
 
-  constructor(private usuarioService: UsuarioService) { }
+  constructor(
+    private usuarioService: UsuarioService,
+  
+    ) { }
 
   ngOnInit(): void {
     // Seta uma classe no BODY para controle de interface
     const body = document.getElementsByTagName('body')[0];
     body.classList.add('page-usuarios');
-  }
 
+  }
   onSubmit() {
     console.log(this.usuario);
     this.usuarioService.salvarUsuario(this.usuario).subscribe(
@@ -28,8 +33,9 @@ export class UsuariosComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-      }
+      }   
     );
+    this.getUsuarios();
   }
 
   getUsuarios() {
@@ -42,11 +48,4 @@ export class UsuariosComponent implements OnInit {
       }
     );
   }
-
-
-  preparaEditarUsuario(usuario: Usuario) {
-
-  }
-
-
 }

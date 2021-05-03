@@ -38,6 +38,7 @@ import {InputMaskModule} from 'primeng/inputmask';
 import { ListarUsuariosComponent } from './usuarios/listar-usuarios/listar-usuarios.component';
 import { HistoricoComponent } from './historico/historico.component';
 import { ListarHistoricoComponent } from './historico/listar-historico/listar-historico.component';
+import { EditarUsuariosComponent } from './usuarios/editar-usuarios/editar-usuarios.component';
 
 registerLocaleData(localePt, 'pt');
 
@@ -52,9 +53,11 @@ const appRoutes: Routes = [
   { path: 'cadastro-historico.ts', component: HistoricoComponent},
   { path: 'usuarios', component: ListarUsuariosComponent},
   { path: 'cadastro-usuario', component: UsuariosComponent},
+  { path :'editar-usuarios/:id', component: EditarUsuariosComponent},
   { path: 'login', component: LoginComponent}
 ];
 
+//40975479091
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
@@ -68,7 +71,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LoginComponent,
     ListarUsuariosComponent,
     HistoricoComponent,
-    ListarHistoricoComponent
+    ListarHistoricoComponent,
+    EditarUsuariosComponent
   ],
   imports: [
     BrowserModule,
