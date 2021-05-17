@@ -5,7 +5,9 @@
 <article class="page-content">
 
   <div class="page-content-card content">
-
+    <table *ngIf="historico.length == 0" class="table">
+      <thead><tr>Não há histórico de notificações para ser exibido</tr></thead>
+    </table>
     <table *ngIf="historico.length > 0" class="table">
       <thead>
       <tr>

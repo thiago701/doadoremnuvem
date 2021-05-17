@@ -227,6 +227,11 @@ nav.sidebar-nav ul {
     bottom: 40px;
     right: 20px;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3); }
+  #page .bt-page-cancel{
+    position:fixed;
+    bottom: 40px;
+    right: 120px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);}  
 
 body.page-login footer.sidebar-footer {
   display: none; }

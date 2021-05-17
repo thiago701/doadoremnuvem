@@ -1,23 +1,24 @@
 <main>
     <header class="page-header">
         <h1><i class="fas fa-user-edit"></i> Cadastro de Usuário</h1>
+        <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+        <p-toast></p-toast>
         <br>
     </header>
-
     <article class="page-content">
         <div class="page-content-card content">
             <div class="row">
               <div class="col-sm-6">
-                <div class="form-item ">
-                  <label>Nome Completo</label>
-                  <input [(ngModel)]="usuario.nome" class="form-control required" name="nome" type="" required>
+                <div class="form-item">
+                  <label>Nome Completo*</label>
+                  <input [(ngModel)]="usuario.nome" class="form-control required" name="nome" id="nome" type="text"  pInputText placeholder="Nome completo" required>
                 </div>
               </div>
                 <div class="col-sm-6">
                     <div class="form-item ">
                         <label>Perfil</label>
                         <select [(ngModel)]="usuario.perfil"
-                                class="custom-select" name="perfil" id="perfil" required>
+                                class="custom-select" name="perfil" id="perfil" pInputText placeholder="Perfil" required>
                             <option value="ADMIN">Administrador</option>
                         </select>
                     </div>
@@ -26,14 +27,14 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-item ">
-                        <label>CPF (Apenas números)</label>
-                      <input [(ngModel)]="usuario.cpf" class="form-control required" name="documento" type="number" [maxLength]="11" required>
+                        <label>CPF (Apenas números)*</label>
+                      <input [(ngModel)]="usuario.cpf" class="form-control required" Nname="documento" id="documento" numeric type="number" [maxLength]="11" pInputText placeholder="Número do CPF"  required>
                     </div>
                 </div>
               <div class="col-sm-6">
                 <div class="form-item ">
-                  <label>E-mail</label>
-                  <input [(ngModel)]="usuario.email" class="form-control required" name="email" type="email" required>
+                  <label>E-mail*</label>
+                  <input [(ngModel)]="usuario.email" class="form-control required" Name="email" id="email" type="email" pInputText placeholder="nome@email.com" required>
                 </div>
               </div>
 
@@ -41,26 +42,29 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-item ">
-                        <label>Endereço</label>
-                        <input [(ngModel)]="usuario.endereco" class="form-control required" name="endereco" type="text" required>
+                        <label>Endereço*</label>
+                        <input [(ngModel)]="usuario.endereco" class="form-control required" name="endereco" type="text" pInputText placeholder="Endereço"  required>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="form-item ">
-                        <label>Telefone</label>
-                        <input [(ngModel)]="usuario.telefone" class="form-control required" name="telefone" type="text" required>
+                        <label>Telefone*</label>
+                        <input [(ngModel)]="usuario.telefone" class="form-control required" name="telefone" numeric type="number" pInputText placeholder="(99) 99999-9999"  required>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="form-item ">
-                        <label>Senha</label>
-                        <input [(ngModel)]="usuario.senha" class="form-control required" name="senha" type="password" required>
+                        <label>Senha*</label>
+                        <input [(ngModel)]="usuario.senha" class="form-control required" name="senha" type="password" pInputText placeholder="*****" required>
                     </div>
                 </div>
             </div>
+            <br>
+            <small class="p-error">*Campos obrigatórios</small>
+   
         </div>
     </article>
-
-    <button (click)="onSubmit()" type="button" class="btn btn-primary bt-page" routerLink="/usuarios"><i class="fas fa-save"></i> Salvar</button>
+    <button (click)="onSubmit()" type="button" class="btn btn-success bt-page" routerLink="/usuarios"><i class="fas fa-save"></i> Salvar</button>
+    <button (click)="cancelarCadastro()" type="button" class="btn btn-danger bt-page-cancel" routerLink="/usuarios"><i class="fas fa-ban"></i> Cancelar</button>
 
 </main>
