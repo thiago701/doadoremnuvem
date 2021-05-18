@@ -1,6 +1,8 @@
 <main>
     <header class="page-header">
         <h1><i class="fas fa-user-edit"></i> Editar de Usuário</h1>
+        <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+        <p-toast></p-toast>
         <br>
     </header>
 
@@ -58,9 +60,13 @@
                     </div>
                 </div>
             </div>
+           
         </div>
     </article>
 
-    <button (click)="editarUsuario(usuario)" type="button" class="btn btn-primary bt-page" routerLink="/usuarios"><i class="fas fa-save"></i> Editar</button>
+    <button type="button" class="btn btn-success bt-page" routerLink="/usuarios" (click)="editarUsuario(usuario)"><i class="fas fa-save"></i> Salvar</button> 
+    <button type="button" class="btn btn-danger bt-page-cancel" routerLink="/usuarios" (click)="cancelarEdicao()" ><i class="fas fa-ban"></i> Cancelar</button>
+  
 
+  
 </main>
