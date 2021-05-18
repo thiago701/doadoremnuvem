@@ -5,7 +5,9 @@
 <article class="page-content">
 
   <div class="page-content-card content">
-
+    <table *ngIf="doadores.length == 0" class="table">
+      <thead><tr>Nenhum doador encontrado</tr></thead>
+    </table>
     <table *ngIf="doadores.length > 0" class="table">
       <thead>
       <tr>

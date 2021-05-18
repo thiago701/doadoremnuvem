@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from 'src/app/login/usuario';
 import { UsuarioService } from '../usuario.service';
+import { ConfirmationService, PrimeNGConfig, MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-listar-usuarios',
@@ -12,8 +13,13 @@ export class ListarUsuariosComponent implements OnInit {
   public usuarios: Array<Usuario> = [];
   public usuario : Usuario = new Usuario();
 
+  ;
+
   constructor(
-    private usuarioService: UsuarioService) { }
+    private usuarioService: UsuarioService, 
+    private confimationService : ConfirmationService,
+    private messageService : MessageService) 
+    { }
 
   ngOnInit(): void {
     this.listarUsuarios();
@@ -39,7 +45,19 @@ export class ListarUsuariosComponent implements OnInit {
   }
 
   excluirUsuario(usuario: Usuario) {
-    this.usuarioService.excluirUsuario(usuario).subscribe(data => {});
-    this.listarUsuarios();
+    this.confimationService.confirm({
+      message:'Deseja realmente excluir este usuário?',
+      header:'Confirmação',
+      icon: 'fas fa-question',
+      accept:() => {
+        this.usuarioService.excluirUsuario(usuario).subscribe(data => {});
+        this.listarUsuarios();
+        this.messageService.add({severity:'success',
+        summary:'Sucesso', detail:'Exclusão realizada!'})
+      } ,
+      reject:() =>{
+        this.messageService.add({severity:'error', summary:'Cancelado', detail:'Operação não realizada'})
+      } 
+    })
   }
 }

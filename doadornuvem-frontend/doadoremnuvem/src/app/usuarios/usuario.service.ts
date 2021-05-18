@@ -1,5 +1,6 @@
 import {HttpClient, HttpParams} from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { data } from 'jquery';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Usuario } from '../login/usuario';
@@ -27,7 +28,9 @@ export class UsuarioService {
         .set('senha', usuario.senha)
     };
     const url = environment.apiUrl + environment.post_usuarios_salvar;
+    console.log(this.http.request.toString);
     return this.http.get(url, options);
+    
   }
 
   editarUsuario(usuario: Usuario) {
