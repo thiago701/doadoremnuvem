@@ -4,7 +4,9 @@
 
 <article class="page-content">
 
-  <div class="page-content-card content align-content-right" >
+  <div *ngIf="!mensagem">Carregando...</div>
+
+  <div class="page-content-card content align-content-right" *ngIf="mensagem">
     <div class="row">
       <div class="col-sm-12">
         <div class="form-item ">
