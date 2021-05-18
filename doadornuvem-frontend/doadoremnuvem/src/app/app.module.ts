@@ -38,6 +38,12 @@ import {InputMaskModule} from 'primeng/inputmask';
 import { ListarUsuariosComponent } from './usuarios/listar-usuarios/listar-usuarios.component';
 import { HistoricoComponent } from './historico/historico.component';
 import { ListarHistoricoComponent } from './historico/listar-historico/listar-historico.component';
+import { EditarUsuariosComponent } from './usuarios/editar-usuarios/editar-usuarios.component';
+import { ListarDoadoresComponent } from './doadores/listar-doadores/listar-doadores.component';
+import { ReplacePipe } from 'angular-pipes';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { MensagensComponent } from './notificacao/mensagens/mensagens.component';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 registerLocaleData(localePt, 'pt');
 
@@ -52,7 +58,10 @@ const appRoutes: Routes = [
   { path: 'cadastro-historico.ts', component: HistoricoComponent},
   { path: 'usuarios', component: ListarUsuariosComponent},
   { path: 'cadastro-usuario', component: UsuariosComponent},
-  { path: 'login', component: LoginComponent}
+  { path: 'editar-usuarios/:id', component: EditarUsuariosComponent},
+  { path: 'login', component: LoginComponent},
+  { path: 'doadores', component: ListarDoadoresComponent},
+  { path: 'mensagens', component: MensagensComponent}
 ];
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -68,7 +77,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LoginComponent,
     ListarUsuariosComponent,
     HistoricoComponent,
-    ListarHistoricoComponent
+    ListarHistoricoComponent,
+    EditarUsuariosComponent,
+    ListarDoadoresComponent,
+    ReplacePipe,
+    MensagensComponent
   ],
   imports: [
     BrowserModule,
@@ -96,7 +109,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ToastModule,
     ReactiveFormsModule,
     CascadeSelectModule,
-    InputMaskModule
+    InputMaskModule,
+    SelectButtonModule,
+    InputTextareaModule
   ],
   providers: [],
   bootstrap: [AppComponent]

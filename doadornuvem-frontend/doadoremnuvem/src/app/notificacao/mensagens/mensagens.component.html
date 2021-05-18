@@ -1,0 +1,44 @@
+<header class="page-header">
+  <h1><i class="fas fa-comments"></i> Mensagens para Notificações</h1>
+</header>
+
+<article class="page-content">
+
+  <div *ngIf="!mensagem">Carregando...</div>
+
+  <div class="page-content-card content align-content-right" *ngIf="mensagem">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-item ">
+          <label>Geral: &nbsp;</label>
+          <textarea class="float-right" [rows]="3" [cols]="100" [(ngModel)]="mensagem.msg_notifica_geral" pInputTextarea autoResize="autoResize"
+                    placeholder="Corpo de mensagem para rotina automática que notifica doadores aptos"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 ">
+        <div class="form-item ">
+          <label>Por Tipo: &nbsp;</label>
+          <textarea class="float-right" [rows]="3" [cols]="100" [(ngModel)]="mensagem.msg_notifica_por_tipo" pInputTextarea autoResize="autoResize"
+                    placeholder="Corpo de mensagem para ação de notificar por tipo sanguíneo"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-item ">
+          <label>Por Localidade: &nbsp;</label>
+          <textarea class="float-right" [rows]="3" [cols]="100" [(ngModel)]="mensagem.msg_notifica_por_localidade" pInputTextarea autoResize="autoResize"
+                    placeholder="Corpo de mensagem para ação de notificar por localidade (cidade e bairro)"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button (click)="atualizar()" type="button" class="btn btn-primary bt-page" routerLink="/mensagens"><i class="fas fa-save"></i> Editar</button>
+
+
+</article>

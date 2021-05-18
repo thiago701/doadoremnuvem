@@ -6,6 +6,8 @@
 
   <div class="page-content-card content">
 
+    <div *ngIf="historico.length == 0">Carregando...</div>
+
     <table *ngIf="historico.length > 0" class="table">
       <thead>
       <tr>

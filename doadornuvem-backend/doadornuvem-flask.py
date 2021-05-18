@@ -83,6 +83,7 @@ def salvarHistorico():
         raise Exception("Ocorreu um erro geral!")
     return jsonify(msg)
 
+
 # Usuario
 @app.route('/api/usuarios/salvar', methods=['GET', 'POST'])
 def salvarUsuario():
@@ -123,6 +124,7 @@ def salvarUsuario():
         raise Exception("Ocorreu um erro geral!")
     return jsonify(msg)
 
+
 @app.route('/api/usuarios/editar', methods=['GET', 'POST'])
 def editarUsuario():
     msg = ''
@@ -159,6 +161,7 @@ def editarUsuario():
         raise Exception("Ocorreu um erro geral!")
     return jsonify(msg)
 
+
 @app.route('/api/usuarios/excluir', methods=['GET', 'POST'])
 def excluirUsuario():
     msg = ''
@@ -179,15 +182,18 @@ def excluirUsuario():
         raise Exception("Ocorreu um erro geral!")
     return jsonify(msg)
 
+
 def testeParametrosHistorico(request):
     return (request.args.get("status") is None or request.args.get("tp_operacao") is None
             or request.args.get("ds_log") is None or request.args.get("qt_doadores_notificados") is None)
+
 
 def testeParametrosUsuario(request):
     return (request.args.get("nome") is None or request.args.get("perfil") is None or
             request.args.get("cpf") is None or request.args.get("email") is None or
             request.args.get("endereco") is None or request.args.get("telefone") is None or
             request.args.get("senha") is None)
+
 
 # Historico Listar
 @app.route('/api/historico/')
@@ -205,6 +211,7 @@ def listarHistorico():
         raise Exception("Ocorreu um erro geral!")
     return respostaHistoricoJson(lista)
 
+
 # Usuario Listar
 @app.route('/api/usuarios/')
 @app.route('/api/usuarios/listar', methods=['GET'])
@@ -221,6 +228,114 @@ def listarUsuarios():
         raise Exception("Ocorreu um erro geral!")
     return respostaUsuarioJson(lista)
 
+# Usuario By CPF
+@app.route('/api/usuarios/listarbycpf', methods=['GET'])
+def buscarUsuarioByCpf():
+    try:
+        if mongoDBonline:
+            if request.args.get("cpf") is None:
+                msg = 'Parametros nulos'
+                return msg, 400
+            else:
+                usuarioEdicao = buscarUsuarioPorCpfBD(int(request.args.get("cpf")), MongoDBConf())
+
+    except Exception as e:
+        logging.error(e)
+        raise Exception("Usuário não encontrado")
+    return respostaUsuarioJson(usuarioEdicao)
+
+# Doador Listar
+@app.route('/api/doadores/')
+@app.route('/api/doadores/listar', methods=['GET'])
+def listarDoadores():
+    try:
+        if (mongoDBonline):
+            # executa metodo principal
+            lista = listarDoadoresBD(MongoDBConf())
+        else:
+            print('mongodb: offline')
+            raise Exception('Falha de comunicação com mongodb!')
+    except Exception as e:
+        logging.error(e)
+        raise Exception("Ocorreu um erro geral!")
+    return respostaDoadorJson(lista)
+
+# Doador editar permissão de notificação
+@app.route('/api/doadores/editar-permissao-notificacao/<registro>/<valor>', methods=['GET'])
+def atualizarPermissaoNotificacaoDoador(registro, valor):
+    try:
+        if (mongoDBonline):
+            # executa metodo principal
+            editarNotificacaoDoadorBD(registro, str_to_bool(valor), MongoDBConf())
+        else:
+            print('mongodb: offline')
+            raise Exception('Falha de comunicação com mongodb!')
+    except Exception as e:
+        logging.error(e)
+        raise Exception("Ocorreu um erro geral!")
+    return jsonify('Atualizado a permissão de notificação.')
+
+# Doador Listar por tipo
+@app.route('/api/doadores/listar-por-tipo/<grupoabo>/<fatorrh>', methods=['GET'])
+def listarDoadoresPorTipo(grupoabo, fatorrh):
+    try:
+        if (mongoDBonline):
+            # executa metodo principal
+            lista = listarDoadoresPorTipoBD(grupoabo, fatorrh, MongoDBConf())
+        else:
+            print('mongodb: offline')
+            raise Exception('Falha de comunicação com mongodb!')
+    except Exception as e:
+        logging.error(e)
+        raise Exception("Ocorreu um erro geral!")
+    return respostaDoadorJson(lista)
+
+# Doador Listar por localidade
+@app.route('/api/doadores/listar-por-localidade/<cidade>/<bairro>', methods=['GET'])
+def listarDoadoresPorLocalidade(cidade, bairro):
+    try:
+        if (mongoDBonline):
+            # executa metodo principal
+            lista = listarDoadoresPorLocalidadeBD(cidade, bairro, MongoDBConf())
+        else:
+            print('mongodb: offline')
+            raise Exception('Falha de comunicação com mongodb!')
+    except Exception as e:
+        logging.error(e)
+        raise Exception("Ocorreu um erro geral!")
+    return respostaDoadorJson(lista)
+
+# Mensagens para notificação
+@app.route('/api/mensagens/editar-mensagens-notificacao/<msg_geral>/<msg_tipo>/<msg_localidade>', methods=['GET'])
+def atualizarMensagensNotificacao(msg_geral, msg_tipo, msg_localidade):
+    try:
+        if (mongoDBonline):
+            # executa metodo principal
+            editarMensagensBD(msg_geral, msg_tipo, msg_localidade, MongoDBConf())
+        else:
+            print('mongodb: offline')
+            raise Exception('Falha de comunicação com mongodb!')
+    except Exception as e:
+        logging.error(e)
+        raise Exception("Ocorreu um erro geral!")
+    return jsonify('Atualizado as mensagens de notificação.')
+
+# Mensagens para notificação
+@app.route('/api/mensagens/')
+@app.route('/api/mensagens/listar', methods=['GET'])
+def listarMensagens():
+    try:
+        if (mongoDBonline):
+            # executa metodo principal
+            lista = listarMensagensBD(MongoDBConf())
+        else:
+            print('mongodb: offline')
+            raise Exception('Falha de comunicação com mongodb!')
+    except Exception as e:
+        logging.error(e)
+        raise Exception("Ocorreu um erro geral!")
+    return respostaMensagemJson(lista)
+
 # TODO melhorar
 def respostaHistoricoJson(lista):
     resposta = list()
@@ -232,6 +347,7 @@ def respostaHistoricoJson(lista):
                          'qt_doadores_notificados': r['qt_doadores_notificados']
                          })
     return jsonify(resposta)
+
 
 # TODO melhorar
 def respostaUsuarioJson(lista):
@@ -246,6 +362,47 @@ def respostaUsuarioJson(lista):
                          'senha': r['senha']
                          })
     return jsonify(resposta)
+
+
+# TODO melhorar
+def respostaDoadorJson(lista):
+    resposta = list()
+    for r in lista:
+        resposta.append({
+            'registro': r['registro'].strip() if not r['registro'] is None else '',
+            'nome': r['nome'].strip() if not r['nome'] is None else '',
+            'dtreg': r['dtreg'].strip() if not r['dtreg'] is None else '',
+            'cidade': r['cidade'].strip() if not r['cidade'] is None else '',
+            'bairro': r['bairro'].strip() if not r['bairro'] is None else '',
+            'grupoabo': r['grupoabo'].strip() if not r['grupoabo'] is None else '',
+            'fatorrh': r['fatorrh'].strip() if not r['fatorrh'] is None else '',
+            'fone': r['fone'].strip() if not r['fone'] is None else '',
+            'celular': r['celular'].strip() if not r['celular'] is None else '',
+            'sexo': r['sexo'].strip() if not r['sexo'] is None else '',
+            'dtnasc': r['dtnasc'].strip() if not r['dtnasc'] is None else '',
+            'data_ultima_doacao': r['data_ultima_doacao'].strip(),
+            'data_proxima_doacao': r['data_proxima_doacao'].strip(),
+            'permissao_notificacao': r['permissao_notificacao']
+        })
+    return jsonify(resposta)
+
+# TODO melhorar
+def respostaMensagemJson(lista):
+    resposta = list()
+    for r in lista:
+        resposta.append({'msg_notifica_geral': r['msg_notifica_geral'],
+                         'msg_notifica_por_tipo': r['msg_notifica_por_tipo'],
+                         'msg_notifica_por_localidade': r['msg_notifica_por_localidade']
+                         })
+    return jsonify(resposta)
+
+def str_to_bool(s):
+    if s == 'true':
+         return True
+    elif s == 'false':
+         return False
+    else:
+         raise ValueError
 
 # Status
 @app.route('/', methods=['GET'])

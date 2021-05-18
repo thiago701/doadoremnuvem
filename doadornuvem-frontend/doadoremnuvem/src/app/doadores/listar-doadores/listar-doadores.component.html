@@ -1,0 +1,42 @@
+<header class="page-header">
+  <h1><i class="fas fa-user-friends"></i> Lista de Doadores</h1>
+</header>
+
+<article class="page-content">
+
+  <div class="page-content-card content">
+
+    <div *ngIf="doadores.length == 0">Carregando...</div>
+
+    <table *ngIf="doadores.length > 0" class="table">
+      <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Nome</th>
+        <th scope="col">Tipo</th>
+        <th scope="col">Data de Nasc.</th>
+        <th scope="col">Telefone</th>
+        <th scope="col">Celular</th>
+        <th scope="col">Próx. Doação</th>
+        <th scope="col">Permite Notificacão</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let d of doadores; index as i">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ d.nome }}</td>
+        <td>{{ d.grupoabo + (d.fatorrh
+          | replace : 'P' : '+'
+          | replace : 'N' : '-')}}</td>
+        <td>{{ d.dtnasc | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ d.fone }}</td>
+        <td>{{ d.celular }}</td>
+        <td>{{ d.data_proxima_doacao | date: 'dd/MM/yyyy' }}</td>
+        <td><p-selectButton [options]="permNotiOpcoes" [(ngModel)]="d.permissao_notificacao" optionLabel="label" optionValue="value" (onChange)="atualizarPermissaoNotificacao(d.registro, $event)"></p-selectButton></td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</article>

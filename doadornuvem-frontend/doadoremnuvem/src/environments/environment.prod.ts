@@ -2,7 +2,6 @@ export const environment = {
   production: true,
 
   // API
-  // API
   apiUrl: 'http://35.226.20.56:5000/api',
   get_historico_listar: '/historico/listar',
 

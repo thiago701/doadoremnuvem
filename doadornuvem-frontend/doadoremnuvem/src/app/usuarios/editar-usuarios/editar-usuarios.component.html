@@ -1,0 +1,66 @@
+<main>
+    <header class="page-header">
+        <h1><i class="fas fa-user-edit"></i> Editar de Usuário</h1>
+        <br>
+    </header>
+
+    <article class="page-content">
+        <div class="page-content-card content">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-item ">
+                  <label>Nome Completo</label>
+                  <input [(ngModel)]="usuario.nome" class="form-control required" name="nome" type="" required>
+                </div>
+              </div>
+                <div class="col-sm-6">
+                    <div class="form-item ">
+                        <label>Perfil</label>
+                        <select [(ngModel)]="usuario.perfil"
+                                class="custom-select" name="perfil" id="perfil" required>
+                            <option value="ADMIN">Administrador</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-item ">
+                        <label>CPF (Apenas números)</label>
+                      <input [(ngModel)]="usuario.cpf" class="form-control required" name="documento" type="number" [maxLength]="11" required>
+                    </div>
+                </div>
+              <div class="col-sm-6">
+                <div class="form-item ">
+                  <label>E-mail</label>
+                  <input [(ngModel)]="usuario.email" class="form-control required" name="email" type="email" required>
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-item ">
+                        <label>Endereço</label>
+                        <input [(ngModel)]="usuario.endereco" class="form-control required" name="endereco" type="text" required>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-item ">
+                        <label>Telefone</label>
+                        <input [(ngModel)]="usuario.telefone" class="form-control required" name="telefone" type="text" required>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-item ">
+                        <label>Senha</label>
+                        <input [(ngModel)]="usuario.senha" class="form-control required" name="senha" type="password" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <button (click)="editarUsuario(usuario)" type="button" class="btn btn-primary bt-page" routerLink="/usuarios"><i class="fas fa-save"></i> Editar</button>
+
+</main>
