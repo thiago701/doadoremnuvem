@@ -44,6 +44,9 @@ import { ReplacePipe } from 'angular-pipes';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { MensagensComponent } from './notificacao/mensagens/mensagens.component';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import {ConfirmDialogModule } from 'primeng/confirmdialog';
+//import { CustomerService } from './customerservice';
 
 registerLocaleData(localePt, 'pt');
 
@@ -111,9 +114,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CascadeSelectModule,
     InputMaskModule,
     SelectButtonModule,
-    InputTextareaModule
+    InputTextareaModule,
+    ConfirmDialogModule,
+    
   ],
-  providers: [],
+  providers: [ConfirmationService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

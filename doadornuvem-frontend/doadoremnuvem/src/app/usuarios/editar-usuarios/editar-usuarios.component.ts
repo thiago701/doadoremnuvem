@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {Usuario} from '../../login/usuario';
 import {UsuarioService} from '../usuario.service';
 import {ActivatedRoute} from '@angular/router' ;
-import {Message,MessageService} from 'primeng/api';
+import {MessageService, ConfirmationService} from 'primeng/api';
 
 @Component({
   selector: 'app-editar-usuarios',
   templateUrl: './editar-usuarios.component.html',
-  styleUrls: ['./editar-usuarios.component.css'],
-  providers:[MessageService]
+  styleUrls: ['./editar-usuarios.component.css']
 })
 export class EditarUsuariosComponent implements OnInit {
   public usuario: Usuario = new Usuario();
@@ -16,7 +15,10 @@ export class EditarUsuariosComponent implements OnInit {
 
   constructor(
     public usuarioService : UsuarioService,
-    private activatedRoute : ActivatedRoute) {
+    private activatedRoute : ActivatedRoute,
+    private confimationService : ConfirmationService,
+    private messageService : MessageService
+    ) {
       this.preparaEditarUsuario(this.activatedRoute.snapshot.params.id);
      }
 
@@ -37,10 +39,25 @@ export class EditarUsuariosComponent implements OnInit {
   }
 
   editarUsuario(usuario: Usuario) {
-    this.usuarioService.editarUsuario(usuario).subscribe(data => {});
-    this.getUsuarios();
+    this.usuarioService.editarUsuario(usuario).subscribe(
+      (data) => {
+        this.messageService.add({severity:'success', summary:'Operação realizada', detail:'Usuário atualizado com sucesso!'})
+          this.getUsuarios();
+      },
+      (err) =>{
+        this.messageService.add({severity:'error', summary:'Operação não realizada', detail: 'Falha: ' + err})    
+      }
+    );
+     
   }
 
+  cancelarEdicao(){
+    this.usuarioService.listarUsuarios().subscribe(
+      (data) =>{
+        this.messageService.add({severity:'error', summary:'Operação não realizada', detail:'Edição cancelada!'})
+      } ); 
+  }
+  
   preparaEditarUsuario(cpf : string) {
     this.usuarioService.getUsuarioByCpf(cpf).subscribe(
       (data : Usuario) =>{
