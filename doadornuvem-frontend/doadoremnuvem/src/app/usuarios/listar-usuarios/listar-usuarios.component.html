@@ -7,14 +7,11 @@
 
 <article class="page-content">
 
-    <div class="page-content-card content">
+      <div class="page-content-card content" *ngIf="usuarios.length == 0">Carregando...</div>
+
        <table *ngIf="usuarios.length == 0" class="table">
           <thead>
             <tr> Nenhum usuário encontrado</tr></thead> 
-        </table>
-      <table *ngIf="usuarios.length > 0" class="table">
-        <ng-template pTemplate="header">
-        <thead>
           <tr>
             <!-- <th pSortableColumn="name"><p-sortIcon field="name"></p-sortIcon></th>
             <th pSortableColumn="name">Nome <p-sortIcon field="name"></p-sortIcon></th>
@@ -39,15 +36,15 @@
               <td>{{ u.perfil }}</td>
               <td>{{ u.cpf }}</td>
               <td>
-                <button type="button" class="btn btn-dark" routerLink="/editar-usuarios/{{u.cpf}}"><i class="fas fa-edit"></i> Editar</button> 
+                <button type="button" class="btn btn-dark" routerLink="/editar-usuarios/{{u.cpf}}"><i class="fas fa-edit"></i> Editar</button>
                &nbsp;
-                <button type="button" class="btn btn-danger" routerLink="/usuarios" (click)="excluirUsuario(u)"><i class="fas fa-trash-alt"></i> Excluir</button>  
+                <button type="button" class="btn btn-danger" routerLink="/usuarios" (click)="excluirUsuario(u)"><i class="fas fa-trash-alt"></i> Excluir</button>
               </td>
             </tr>
             </tbody>
           </table>
 
           <p class="line-add-button"><button type="button" class="btn btn-primary" routerLink="/cadastro-usuario"><i class="fas fa-plus"></i>  Adicionar</button></p>
-    </div> 
+    </div>
 </article>
 </main>
