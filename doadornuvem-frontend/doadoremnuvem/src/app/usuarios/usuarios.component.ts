@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { data } from 'jquery';
+import { data, valHooks } from 'jquery';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Usuario } from '../login/usuario';
 import { UsuarioService } from './usuario.service';
@@ -23,21 +23,27 @@ export class UsuariosComponent implements OnInit {
     private confimationService : ConfirmationService,
     private messageService : MessageService,
     private formBuilder :FormBuilder
-    ) { }
+    ) { 
+      this.formCadastro = this.formBuilder.group({
+        nome:[null, [Validators.required, Validators.minLength(3)]],
+        email:[null,[Validators.required, Validators.email]],
+        documento:[null, [Validators.required, Validators.minLength(11)]],
+        endereco:[null, [Validators.required,Validators.minLength(3)]],
+        telefone:[null, [Validators.required, Validators.minLength(3)]],
+        senha:[null, [Validators.required, Validators.minLength(5)]],
+        perfil:[null, [Validators.required]]
+      });
+    }
 
   ngOnInit(): void {
     // Seta uma classe no BODY para controle de interface
     const body = document.getElementsByTagName('body')[0];
     body.classList.add('page-usuarios');
     
-    this.formCadastro = this.formBuilder.group({
-      nome:[null, Validators.required, Validators.minLength(3)],
-      email:[null,[Validators.required, Validators.email]],
-      documento:[null] 
-    });
+   
   }
   onSubmit() {
-    // if (this.formCadastro.valid){
+     if (this.formCadastro.valid){
       this.usuarioService.salvarUsuario(this.usuario).subscribe(
         (data) => {
          console.log("dados"+data[1])
@@ -55,14 +61,12 @@ export class UsuariosComponent implements OnInit {
           }
         }   
       );
-    // }else{
-    //   console.log('Formalário inválid');
-    //  Object.keys(this.formCadastro.controls).forEach(campo => {
-    //    console.log(campo);
-
-    //   //  const controle this.formCadastro.get()get        
-    //  });      
-    // }
+    }else{
+      console.log('Formalário inválid');
+     Object.keys(this.formCadastro.controls).forEach(campo => {
+       console.log(campo);      
+     });      
+    }
   }
 
   cancelarCadastro(){

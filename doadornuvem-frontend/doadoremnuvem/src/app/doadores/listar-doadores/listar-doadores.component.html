@@ -4,10 +4,12 @@
 
 <article class="page-content">
 
-    <div class="page-content-card content" *ngIf="doadores.length == 0">Carregando...</div>
+  <div class="page-content-card content">
+
+    <div *ngIf="doadores.length == 0">Carregando...</div>
 
     <table *ngIf="doadores.length == 0" class="table">
-      <thead><tr>Nenhum doador encontrado</tr></thead>
+      <thead><tr>Nenhum doador encontrado</tr>
       <tr>
         <th scope="col"></th>
         <th scope="col">Nome</th>

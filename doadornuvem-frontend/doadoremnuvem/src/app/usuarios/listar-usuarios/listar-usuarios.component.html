@@ -7,18 +7,15 @@
 
 <article class="page-content">
 
-      <div class="page-content-card content" *ngIf="usuarios.length == 0">Carregando...</div>
+      <div class="page-content-card content">
+      <div *ngIf="usuarios.length == 0">Carregando...</div>
 
        <table *ngIf="usuarios.length == 0" class="table">
-          <thead>
-            <tr> Nenhum usuário encontrado</tr></thead> 
+         <ng-template>
+         <thead>
+            <tr> Nenhum usuário encontrado</tr>
           <tr>
-            <!-- <th pSortableColumn="name"><p-sortIcon field="name"></p-sortIcon></th>
-            <th pSortableColumn="name">Nome <p-sortIcon field="name"></p-sortIcon></th>
-            <th pSortableColumn="name">E-MAIL <p-sortIcon field="name"></p-sortIcon></th>
-            <th pSortableColumn="name">PERFIL <p-sortIcon field="name"></p-sortIcon></th>
-            <th pSortableColumn="name">CPF/CNPJ <p-sortIcon field="name"></p-sortIcon></th>
-            <th scope="col">Ações</th>  -->
+
             <th scope="col"></th>
             <th scope="col">Nome</th>
             <th scope="col">E-MAIL</th>
