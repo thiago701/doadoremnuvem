@@ -10,10 +10,9 @@
       <div class="page-content-card content">
       <div *ngIf="usuarios.length == 0">Carregando...</div>
 
-       <table *ngIf="usuarios.length == 0" class="table">
+       <table *ngIf="usuarios.length > 0" class="table">
          <ng-template>
          <thead>
-            <tr> Nenhum usuário encontrado</tr>
           <tr>
 
             <th scope="col"></th>

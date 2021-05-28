@@ -8,8 +8,8 @@
 
     <div *ngIf="historico.length == 0">Carregando...</div>
 
-    <table *ngIf="historico.length == 0" class="table">
-      <thead><tr>Não há histórico de notificações para ser exibido</tr>
+    <table *ngIf="historico.length > 0" class="table">
+
       <tr>
         <th scope="col">Data</th>
         <th scope="col">Status</th>
@@ -18,7 +18,7 @@
         <th scope="col">Log</th>
         <th scope="col">Ações</th>
       </tr>
-      </thead>
+
       <tbody>
       <tr *ngFor="let h of historico; index as i">
         <td>{{ h.dt_operacao | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
