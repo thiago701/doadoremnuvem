@@ -8,8 +8,7 @@
 
     <div *ngIf="doadores.length == 0">Carregando...</div>
 
-    <table *ngIf="doadores.length == 0" class="table">
-      <thead><tr>Nenhum doador encontrado</tr>
+    <table *ngIf="doadores.length > 0" class="table">
       <tr>
         <th scope="col"></th>
         <th scope="col">Nome</th>
@@ -20,7 +19,7 @@
         <th scope="col">Próx. Doação</th>
         <th scope="col">Permite Notificacão</th>
       </tr>
-      </thead>
+
       <tbody>
       <tr *ngFor="let d of doadores; index as i">
         <th scope="row">{{ i + 1 }}</th>

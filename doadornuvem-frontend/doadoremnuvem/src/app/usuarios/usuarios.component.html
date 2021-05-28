@@ -17,7 +17,7 @@
                     <small *ngIf="formCadastro.controls.nome.errors?.required" class="p-error" style="font-style: italic;" >
                       Campo obrigatório
                     </small>
-                </ng-container>  
+                </ng-container>
                 </div>
               </div>
                 <div class="col-sm-6">
@@ -31,7 +31,7 @@
                             <small *ngIf="formCadastro.controls.perfil.errors?.required" class="p-error" style="font-style: italic;" >
                               Campo obrigatório
                             </small>
-                        </ng-container>  
+                        </ng-container>
                     </div>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                         <small *ngIf="formCadastro.controls.documento.errors?.required" class="p-error" style="font-style: italic;" >
                           Campo obrigatório
                         </small>
-                    </ng-container>    
+                    </ng-container>
                     </div>
                 </div>
               <div class="col-sm-6">
@@ -72,23 +72,23 @@
                         <small *ngIf="formCadastro.controls.endereco.errors?.required" class="p-error" style="font-style: italic;" >
                             Campo obrigatório
                           </small>
-                        </ng-container>  
+                        </ng-container>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="form-item ">
                         <label>Telefone*</label>
-                        <input [(ngModel)]="usuario.telefone" formControlName="telefone" class="form-control required" name="telefone" numeric type="number" pInputText placeholder="(99) 99999-9999"  required>
+                        <input type="number" [(ngModel)]="usuario.telefone" formControlName="telefone" class="form-control required" name="telefone" numeric pInputText placeholder="Ex.: 83988887777" required>
                         <ng-container *ngIf="formCadastro.controls.telefone.touched">
                         <small *ngIf="formCadastro.controls.telefone.errors?.required" class="p-error" style="font-style: italic;" >
                             Campo obrigatório
                           </small>
-                        </ng-container>  
+                        </ng-container>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="form-item ">
-                        <label>Senha*</label>
+                        <label>Senha* (mínimo 6 caracteres)</label>
                         <input [(ngModel)]="usuario.senha" formControlName="senha" class="form-control required" name="senha" type="password" pInputText placeholder="*****" required>
                         <ng-container *ngIf="formCadastro.controls.telefone.touched">
                         <small *ngIf="formCadastro.controls.senha.errors?.required" class="p-error" style="font-style: italic;" >
@@ -100,7 +100,7 @@
             </div>
             <br>
             <small class="p-error">*Campos obrigatórios</small>
-   
+
         </div>
     </article>
     <button (click)="onSubmit()" [disabled]="!formCadastro.valid" type="submit" class="btn btn-success bt-page" routerLink="/usuarios"><i class="fas fa-save"></i> Salvar</button>
