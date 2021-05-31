@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {Historico} from "../historico";
 import {HistoricoService} from "../service/historico.service";
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-listar-historico',
@@ -10,6 +11,7 @@ import {HistoricoService} from "../service/historico.service";
 export class ListarHistoricoComponent implements OnInit {
 
   historico: Array<Historico> = [];
+  @ViewChild('dt') table: Table;
 
   constructor(private historicoService: HistoricoService) { }
 

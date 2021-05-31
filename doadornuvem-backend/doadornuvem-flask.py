@@ -144,7 +144,8 @@ def editarUsuario():
                 return msg, 400
             else:
                 # salvar
-                editarUsuarioBD(request.args.get("nome"),
+                editarUsuarioBD(request.args.get("id"),
+                                request.args.get("nome"),
                                 request.args.get("perfil"),
                                 int(request.args.get("cpf")),
                                 request.args.get("email"),
@@ -353,7 +354,8 @@ def respostaHistoricoJson(lista):
 def respostaUsuarioJson(lista):
     resposta = list()
     for r in lista:
-        resposta.append({'nome': r['nome'],
+        resposta.append({'id': str (r['_id']),
+                         'nome': r['nome'],
                          'perfil': r['perfil'],
                          'cpf': r['cpf'],
                          'email': r['email'],

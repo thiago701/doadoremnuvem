@@ -22,7 +22,7 @@
               </div>
                 <div class="col-sm-6">
                     <div class="form-item ">
-                        <label>Perfil</label>
+                        <label>Perfil*</label>
                         <select [(ngModel)]="usuario.perfil" formControlName="perfil"
                                 class="custom-select" name="perfil" id="perfil" pInputText placeholder="Perfil" required>
                             <option value="ADMIN">Administrador</option>
@@ -39,10 +39,19 @@
                 <div class="col-sm-6">
                     <div class="form-item ">
                         <label>CPF (Apenas números)*</label>
-                      <input [(ngModel)]="usuario.cpf" formControlName="documento" class="form-control required" Nname="documento" id="documento" numeric type="number" [maxLength]="11" pInputText placeholder="Número do CPF"  required>
+                      <input [(ngModel)]="usuario.cpf" formControlName="documento" class="form-control required" name="documento" id="documento" numeric type="text" minlength="11" 
+                        maxLength="11" pInputText placeholder="Número do CPF" required
+                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                        type = "number"  maxlength = "11">
                       <ng-container *ngIf="formCadastro.controls.documento.touched">
                         <small *ngIf="formCadastro.controls.documento.errors?.required" class="p-error" style="font-style: italic;" >
                           Campo obrigatório
+                          <br>
+                        </small>
+                      </ng-container>
+                      <ng-container *ngIf="formCadastro.controls.documento.dirty">
+                        <small *ngIf="validarCpf(usuario.cpf) == false" class="p-error" style="font-style: italic;">
+                          Número de CPF inválido
                         </small>
                     </ng-container>
                     </div>
@@ -50,12 +59,12 @@
               <div class="col-sm-6">
                 <div class="form-item ">
                   <label>E-mail*</label>
-                  <input [(ngModel)]="usuario.email"  formControlName= "email" class="form-control required" Name="email" id="email" type="email" pInputText placeholder="nome@email.com" required>
+                  <input [(ngModel)]="usuario.email"  formControlName= "email" class="form-control required" Name="email" id="email" type="email" ngmodel pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" pInputText placeholder="nome@email.com" required>
                   <ng-container *ngIf="formCadastro.controls.email.touched">
                   <small *ngIf="formCadastro.controls.email.errors?.required" class="p-error" style="font-style: italic;" >
                     Campo obrigatório
                   </small>
-                  <small *ngIf="formCadastro.controls.email.errors?.email" class="p-error" style="font-style: italic;" >
+                  <small *ngIf="formCadastro.controls.email.errors?.pattern" class="p-error" style="font-style: italic;" >
                     E-mail inválido
                   </small>
                 </ng-container>
@@ -88,7 +97,7 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="form-item ">
-                        <label>Senha* (mínimo 6 caracteres)</label>
+                        <label>Senha*<small> (mínimo 6 caracteres)</small> </label>
                         <input [(ngModel)]="usuario.senha" formControlName="senha" class="form-control required" name="senha" type="password" pInputText placeholder="*****" required>
                         <ng-container *ngIf="formCadastro.controls.telefone.touched">
                         <small *ngIf="formCadastro.controls.senha.errors?.required" class="p-error" style="font-style: italic;" >
