@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 import datetime
 import re
+from bson import ObjectId
 
 FORMATO_DATA = '%Y-%m-%d %H:%M:%S'
 
@@ -43,11 +44,12 @@ def salvarUsuarioBD(nome, perfil, cpf, email, endereco, telefone, senha, mongodb
     print('salvo no mongodb: ', id_doc)
 
 
-def editarUsuarioBD(nome, perfil, cpf, email, endereco, telefone, senha, mongodb):
+def editarUsuarioBD(id, nome, perfil, cpf, email, endereco, telefone, senha, mongodb):
     # mongodb
     con = conexaoBanco(mongodb)
     # cria documento formato json
     docNovo = {
+        '_id':id,
         'nome': nome,
         'perfil': perfil,
         'cpf': cpf,
@@ -200,14 +202,14 @@ def inserirDocumento(banco, doc, collection):
 def editarDocumentoUsuario(banco, docNovo, collection):
     print('docNovo', docNovo)
     servico = banco[collection]
-    id = servico.update_one({"cpf": docNovo["cpf"]},
+    id = servico.update_one({"_id": ObjectId(docNovo["_id"])},
                             {"$set": {"nome": docNovo["nome"],
                                       "perfil": docNovo["perfil"],
                                       "cpf": docNovo["cpf"],
                                       "email": docNovo["email"],
                                       "telefone": docNovo["telefone"],
                                       "endereco": docNovo["endereco"],
-                                      "senha": docNovo["senha"]}}, upsert=True)
+                                      "senha": docNovo["senha"]}}, upsert=False)
     return id
 
 

@@ -11,12 +11,17 @@ import { Usuario } from '../login/usuario';
 export class UsuarioService {
 
   constructor(private http: HttpClient) { }
-
   listarUsuarios(): Observable<Array<Usuario>> {
     const url = environment.apiUrl + environment.get_usuarios_listar;
     return this.http.get<Array<Usuario>>(url);
   }
-
+  
+  listagemUsuarios(){
+    const url = environment.apiUrl + environment.get_usuarios_listar;
+    return this.http.get<any>(url).toPromise()
+    .then(res => <Usuario[]>res.data)
+    .then(data => {return data});
+  }
   salvarUsuario(usuario: Usuario) {
     const options = { params: new HttpParams()
         .set('nome', usuario.nome)
@@ -35,6 +40,7 @@ export class UsuarioService {
 
   editarUsuario(usuario: Usuario) {
     const options = { params: new HttpParams()
+        .set('id', usuario.id)
         .set('nome', usuario.nome)
         .set('perfil', usuario.perfil)
         .set('cpf', usuario.cpf)
