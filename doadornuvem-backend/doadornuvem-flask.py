@@ -7,6 +7,10 @@ from dynaconf import FlaskDynaconf
 from .config import settings as conf
 from .mongoDBConf import MongoDBConf
 from .core.persistencia.mongodbRepositorio import *
+from .core.persistencia.usuarioRepositorio import *
+from .core.persistencia.historicoRepositorio import *
+from .core.persistencia.doadorRepositorio import *
+from .core.persistencia.mensagensRepositorio import *
 
 """
     ----------------------------------------------------
