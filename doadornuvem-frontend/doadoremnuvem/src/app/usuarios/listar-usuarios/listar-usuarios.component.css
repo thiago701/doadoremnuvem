@@ -1,0 +1,35 @@
+/* You can add global styles to this file, and also import other style files */
+.table-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+    .p-datatable-header {
+        padding: 1rem;
+        text-align: left;
+        font-size: 1.5rem;
+    }
+
+    .p-paginator {
+        padding: 1rem;
+    }
+
+    .p-datatable-thead > tr > th {
+        text-align: left;
+    }
+
+    .p-datatable-tbody > tr > td {
+        cursor: auto;
+    }
+
+    .p-dropdown-label:not(.p-placeholder) {
+        text-transform: uppercase;
+    }
+
+
+/* Responsive */
+.p-datatable-customers .p-datatable-tbody > tr > td .p-column-title {
+    display: none;
+}
+

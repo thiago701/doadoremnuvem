@@ -4,34 +4,51 @@
 
 <article class="page-content">
 
-    <div class="page-content-card content">
+  <div class="page-content-card content">
 
-    <div *ngIf="historico.length == 0">Carregando...</div>
+    <div *ngIf="historico.length == 0">Nenhum registro encontrado.</div>
+    <p-table #dt [value]=historico [globalFilterFields]="['dt_operacao','qt_doadores_notificados','ds_log']">
+      <ng-template pTemplate="caption">
+        <div class="header">            
+          <span class="p-input-icon-left p-ml-auto">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+              placeholder="Pesquisar" />
+          </span>
+        </div>
+      </ng-template>
 
-    <table *ngIf="historico.length > 0" class="table">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="dt_operacao">Data <p-sortIcon field="historico.dt_operacao"></p-sortIcon>
+          </th>
+          <th pSortableColumn="status">Status <p-sortIcon field="historico.status"></p-sortIcon>
+          </th>
+          <th pSortableColumn="tp_operacao">Tipo <p-sortIcon field="historico.tp_operacao"></p-sortIcon>
+          </th>
+          <th pSortableColumn="qt_doadores_notificados">Quant. <p-sortIcon field="historico.qt_doadores_notificados"></p-sortIcon>
+          </th>
+          <th pSortableColumn="ds_log">Log <p-sortIcon field="historico.ds_log"></p-sortIcon>
+          </th>
+          <th>Ações</th> 
+        </tr>
+        </ng-template>
 
-      <tr>
-        <th scope="col">Data</th>
-        <th scope="col">Status</th>
-        <th scope="col">Tipo</th>
-        <th scope="col">Quant.</th>
-        <th scope="col">Log</th>
-        <th scope="col">Ações</th>
-      </tr>
-
-      <tbody>
-      <tr *ngFor="let h of historico; index as i">
-        <td>{{ h.dt_operacao | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
-        <td>{{ h.status }}</td>
-        <td>{{ h.tp_operacao }}</td>
-        <td>{{ h.qt_doadores_notificados }}</td>
-        <td>{{ h.ds_log }}</td>
-        <td>
-          <button type="button" class="btn btn-warning" routerLink="/historico" *ngIf="h.status === 'FALHA'" (click)="reprocessarFalha(h)"><i class="fas fa-reply-all"></i> Repetir</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+      <!-- <tr *ngFor="let h of historico; index as i"> -->
+      <ng-template pTemplate="body" let-h>
+        <tr>
+          <td>{{ h.dt_operacao | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+          <td>{{ h.status }}</td>
+          <td>{{ h.tp_operacao }}</td>
+          <td>{{ h.qt_doadores_notificados }}</td>
+          <td>{{ h.ds_log }}</td>
+          <td>
+            <button type="button" class="btn btn-warning" routerLink="/historico" *ngIf="h.status === 'FALHA'"
+              (click)="reprocessarFalha(h)"><i class="fas fa-reply-all"></i> Repetir</button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
 
   </div>
 
