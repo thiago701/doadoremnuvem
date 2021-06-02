@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Usuario } from 'src/app/login/usuario';
 import { UsuarioService } from '../usuario.service';
 import { ConfirmationService, PrimeNGConfig, MessageService} from 'primeng/api';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-listar-usuarios',
@@ -12,8 +13,8 @@ export class ListarUsuariosComponent implements OnInit {
 
   public usuarios: Array<Usuario> = [];
   public usuario : Usuario = new Usuario();
-
-  ;
+  
+  @ViewChild('dt') table: Table;
 
   constructor(
     private usuarioService: UsuarioService, 

@@ -2,7 +2,8 @@ export const environment = {
   production: false,
 
   // API
-  apiUrl: 'http://apidoadoremnuvem.ngrok.io/api',
+  //apiUrl: 'http://apidoadoremnuvem.ngrok.io/api',
+  apiUrl:'http://localhost:5000/api',
   get_historico_listar: '/historico/listar',
 
   get_usuarios_listar: '/usuarios/listar',
