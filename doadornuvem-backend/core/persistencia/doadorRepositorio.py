@@ -81,5 +81,6 @@ def listarDoadoresPorLocalidadeBD(cidade, bairro, mongodb):
     rgxBairro = re.compile('.*'+bairro+'.*', re.IGNORECASE)
     return list(collection.find({'cidade': rgxCidade, 'bairro': rgxBairro}))
 
-def listarDoadoresAptosParaNotificar(mongodb):
-    #TODO
+
+#def listarDoadoresAptosParaNotificar(mongodb):
+# TODO implementação
