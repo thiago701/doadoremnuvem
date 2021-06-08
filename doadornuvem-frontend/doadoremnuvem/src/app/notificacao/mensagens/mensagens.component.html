@@ -3,7 +3,7 @@
   <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
   <p-toast></p-toast>
 </header>
-
+<form [formGroup]="formMensagem">
 <article class="page-content">
 
   <div *ngIf="!mensagem">Carregando...</div>
@@ -11,36 +11,52 @@
   <div class="page-content-card content align-content-right" *ngIf="mensagem">
     <div class="row">
       <div class="col-sm-12">
-        <div class="form-item ">
+        <div class="form-item">
           <label>Geral: &nbsp;</label>
-          <textarea class="float-right" [rows]="3" [cols]="100" [(ngModel)]="mensagem.msg_notifica_geral" pInputTextarea autoResize="autoResize"
-                    placeholder="Corpo de mensagem para rotina automática que notifica doadores aptos"></textarea>
+          <textarea formControlName="msg_notifica_geral" class="form-control float-right" [rows]="3" [cols]="100" [(ngModel)]="mensagem.msg_notifica_geral" pInputTextarea autoResize="autoResize"
+                    placeholder="Corpo de mensagem para rotina automática que notifica doadores aptos" required></textarea>
+          <ng-container *ngIf="formMensagem.controls.msg_notifica_geral.touched">
+            <small *ngIf="formMensagem.controls.msg_notifica_geral.errors?.required" class="p-error" style="font-style: italic;" >
+              Campo obrigatório
+            </small>
+        </ng-container>
         </div>
       </div>
     </div>
 
     <div class="row">
       <div class="col-sm-12 ">
-        <div class="form-item ">
+        <div class="form-item">
           <label>Por Tipo: &nbsp;</label>
-          <textarea class="float-right" [rows]="3" [cols]="100" [(ngModel)]="mensagem.msg_notifica_por_tipo" pInputTextarea autoResize="autoResize"
-                    placeholder="Corpo de mensagem para ação de notificar por tipo sanguíneo"></textarea>
+          <textarea formControlName="msg_notifica_por_tipo" class="form-control float-right" [rows]="3" [cols]="100" [(ngModel)]="mensagem.msg_notifica_por_tipo" pInputTextarea autoResize="autoResize"
+                    placeholder="Corpo de mensagem para ação de notificar por tipo sanguíneo" required></textarea>
+          <ng-container *ngIf="formMensagem.controls.msg_notifica_por_tipo.touched">
+              <small *ngIf="formMensagem.controls.msg_notifica_por_tipo.errors?.required" class="p-error" style="font-style: italic;" >
+                Campo obrigatório
+              </small>
+          </ng-container>
         </div>
       </div>
     </div>
 
     <div class="row">
       <div class="col-sm-12">
-        <div class="form-item ">
+        <div class="form-item">
           <label>Por Localidade: &nbsp;</label>
-          <textarea class="float-right" [rows]="3" [cols]="100" [(ngModel)]="mensagem.msg_notifica_por_localidade" pInputTextarea autoResize="autoResize"
-                    placeholder="Corpo de mensagem para ação de notificar por localidade (cidade e bairro)"></textarea>
-        </div>
+          <textarea formControlName="msg_notifica_por_localidade" class="form-control float-right" [rows]="3" [cols]="100" [(ngModel)]="mensagem.msg_notifica_por_localidade" pInputTextarea autoResize="autoResize"
+                    placeholder="Corpo de mensagem para ação de notificar por localidade (cidade e bairro)" required></textarea>
+          <ng-container *ngIf="formMensagem.controls.msg_notifica_por_localidade.touched">
+            <small *ngIf="formMensagem.controls.msg_notifica_por_localidade.errors?.required" class="p-error" style="font-style: italic;" >
+              Campo obrigatório
+            </small>
+          </ng-container>  
+          </div>
       </div>
     </div>
   </div>
 
-  <button (click)="atualizar()" type="button" class="btn btn-success bt-page" routerLink="/mensagens"><i class="fas fa-save"></i> Salvar</button>
-
+  <button (click)="atualizar()" [disabled]="!formMensagem.valid" type="submit" class="btn btn-success bt-page" routerLink="/mensagens"><i class="fas fa-save"></i> Salvar</button>
+  <button (click)="cancelarAtualizar()" type="button" class="btn btn-danger bt-page-cancel" routerLink="/inicio"><i class="fas fa-ban"></i> Cancelar</button>
 
 </article>
+</form>

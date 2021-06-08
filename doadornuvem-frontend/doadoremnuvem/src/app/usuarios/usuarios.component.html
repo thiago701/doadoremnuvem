@@ -112,7 +112,7 @@
 
         </div>
     </article>
-    <button (click)="onSubmit()" [disabled]="!formCadastro.valid" type="submit" class="btn btn-success bt-page" routerLink="/usuarios"><i class="fas fa-save"></i> Salvar</button>
+    <button [disabled]="!formCadastro.valid" type="button" class="btn btn-success bt-page" routerLink="/usuarios" (click)="onSubmit()"><i class="fas fa-save"></i> Salvar</button>
     <button (click)="cancelarCadastro()" type="button" class="btn btn-danger bt-page-cancel" routerLink="/usuarios"><i class="fas fa-ban"></i> Cancelar</button>
 </form>
 </main>

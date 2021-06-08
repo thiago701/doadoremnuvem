@@ -5,6 +5,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Usuario } from '../login/usuario';
 import { UsuarioService } from './usuario.service';
 
+
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
@@ -46,9 +47,7 @@ export class UsuariosComponent implements OnInit {
      if (this.formCadastro.valid){
       this.usuarioService.salvarUsuario(this.usuario).subscribe(
         (data) => {
-         console.log("dados"+data[1])
-          this.messageService.add({severity:'success', summary:'Operação realizada', detail:'Usuário cadastrado com sucesso!'})
-          this.getUsuarios();
+         this.messageService.add({severity:'success', summary:'Operação realizada', detail:'Usuário cadastrado com sucesso!'}) 
         },
         (err) => {
           
@@ -67,6 +66,7 @@ export class UsuariosComponent implements OnInit {
        console.log(campo);      
      });      
     }
+    //this.getUsuarios();
   }
 
   cancelarCadastro(){

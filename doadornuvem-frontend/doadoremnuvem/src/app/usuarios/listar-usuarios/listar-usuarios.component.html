@@ -8,7 +8,7 @@
   <article class="page-content">
     <div class="page-content-card content">
       <div *ngIf="usuarios.length == 0">Nenhum registro encontrado.</div>
-      <p-table #dt [value]="usuarios" 
+      <p-table #dt [value]="usuarios" styleClass="table" 
       [globalFilterFields]="['nome','email','perfil','cpf']">
         <ng-template pTemplate="caption">
           <div class="header">            

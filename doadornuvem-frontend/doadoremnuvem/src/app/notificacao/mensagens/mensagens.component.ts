@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import { MessageService } from 'primeng/api';
 import {MensagensService} from '../mensagens.service';
 import {Mensagem} from './Mensagem';
+import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-mensagens',
@@ -12,9 +13,18 @@ export class MensagensComponent implements OnInit {
 
   @Input()
   mensagem: Mensagem;
+  formMensagem : FormGroup;
 
   constructor(private mensagensService: MensagensService,
-    private confirmacaoService : MessageService) { }
+    private confirmacaoService : MessageService,
+    private formBuilder :FormBuilder) {
+      
+      this.formMensagem = this.formBuilder.group({
+        msg_notifica_geral:[null, [Validators.required, Validators.minLength(5)]],
+        msg_notifica_por_tipo:[null,[Validators.required, Validators.minLength(5)]],
+        msg_notifica_por_localidade:[null,[Validators.required, Validators.minLength(5)]]
+      });
+     }
 
   ngOnInit(): void {
     // Seta uma classe no BODY para controle de interface
@@ -43,6 +53,10 @@ export class MensagensComponent implements OnInit {
           this.confirmacaoService.add({severity:'Error', summary:'Operação não realizada', detail:'Falha ao atualizar a mensagem de notificação:' + err})
         }
         ;
+  }
+
+  cancelarAtualizar(){
+    this.confirmacaoService.add({severity:'error', summary:'Operação não realizada', detail:'Atualização das mensagens cancelada!'});
   }
 
 }

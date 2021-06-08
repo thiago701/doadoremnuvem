@@ -14,6 +14,7 @@ export class DoadorService {
   listarDoadores(): Observable<Array<Doador>> {
     const url = environment.apiUrl + environment.get_doador_listar;
     return this.http.get<Array<Doador>>(url);
+    console.log('Retorno da api');
   }
 
   atualizarPermissaoNotificacao(registro: string, valor: boolean) {

@@ -9,7 +9,7 @@ def editarMensagensBD(msg_geral, msg_tipo, msg_localidade, mongodb):
     id = servico.update({},
                             {"$set": {"msg_notifica_geral": msg_geral,
                                       'msg_notifica_por_tipo': msg_tipo,
-                                      'msg_notifica_por_localidade': msg_localidade}}, upsert=True)
+                                      'msg_notifica_por_localidade': msg_localidade}}, upsert=False)
 
 def listarMensagensBD(mongodb):
     con = conexaoBanco(mongodb)

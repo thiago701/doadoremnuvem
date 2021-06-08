@@ -8,21 +8,35 @@
 
     <div *ngIf="doadores.length == 0">Nenhum registro encontrado.</div>
 
-    <table *ngIf="doadores.length > 0" class="table">
+    <p-table class="table" #dt [value]="doadores" styleClass="table" 
+    [globalFilterFields]="['nome','grupoabo','dtnasc', 'celular', 'data_proxima_doacao']">
+      <ng-template pTemplate="caption">
+        <div class="header">            
+          <span class="p-input-icon-left p-ml-auto">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+              placeholder="Pesquisar" />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
       <tr>
-        <th scope="col"></th>
-        <th scope="col">Nome</th>
-        <th scope="col">Tipo</th>
-        <th scope="col">Data de Nasc.</th>
-        <th scope="col">Telefone</th>
-        <th scope="col">Celular</th>
-        <th scope="col">Próx. Doação</th>
+        <th pSortableColumn="registro">Registro<p-sortIcon field="doadores.registro"></p-sortIcon></th>
+        <th pSortableColumn="nome">Nome<p-sortIcon field="doadores.nome"></p-sortIcon></th>
+        <th pSortableColumn="grupoabo">Tipo <p-sortIcon field="doador.grupoabo"></p-sortIcon></th>
+        
+        <th pSortableColumn="dtnasc">Data de Nasc. <p-sortIcon field="doadores.dtnasc"></p-sortIcon></th>        
+        <th>Telefone</th>
+        <th>Celular</th>
+        <th pSortableColumn="data_proxima_doacao">Data de Nasc. <p-sortIcon field="doadores.data_proxima_doacao"></p-sortIcon></th>
         <th scope="col">Permite Notificacão</th>
       </tr>
+    </ng-template>
 
-      <tbody>
-      <tr *ngFor="let d of doadores; index as i">
-        <th scope="row">{{ i + 1 }}</th>
+    <ng-template pTemplate="body" let-d>
+      <!-- <tr  *ngFor="let d of doadores; index as i">         -->
+        <tr>
+        <td> {{ d.registro }}</td>
         <td>{{ d.nome }}</td>
         <td>{{ d.grupoabo + (d.fatorrh
           | replace : 'P' : '+'
@@ -30,11 +44,11 @@
         <td>{{ d.dtnasc | date: 'dd/MM/yyyy' }}</td>
         <td>{{ d.fone }}</td>
         <td>{{ d.celular }}</td>
-        <td>{{ d.data_proxima_doacao | date: 'dd/MM/yyyy' }}</td>
+        <td> {{ d.data_proxima_doacao | date: 'dd/MM/yyyy' }}</td>
         <td><p-selectButton [options]="permNotiOpcoes" [(ngModel)]="d.permissao_notificacao" optionLabel="label" optionValue="value" (onChange)="atualizarPermissaoNotificacao(d.registro, $event)"></p-selectButton></td>
       </tr>
-      </tbody>
-    </table>
+    </ng-template>
+    </p-table>
 
   </div>
 
