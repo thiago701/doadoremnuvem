@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {DoadorService} from '../../app/doadores/doador.service'; 
-import {ActivatedRoute} from '@angular/router' ;
+import {ActivatedRoute} from '@angular/router';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-permissao-notificacao',
@@ -10,25 +11,27 @@ import {ActivatedRoute} from '@angular/router' ;
 export class PermissaoNotificacaoComponent implements OnInit {
 
   constructor(private doadorService: DoadorService, 
+    private messageService : MessageService,
     private activatedRoute : ActivatedRoute) { }
 
   ngOnInit(): void {
 
   }
 
-  cancelarNotificao(){
-    let registro = btoa(this.activatedRoute.snapshot.params.id);
-    console.log("encode: "+registro);
-    //atob(this.activatedRoute.snapshot.params.id);
+  cancelarNotificao(Registro : string){
+    let registroDoador = atob(Registro);  
+    this.doadorService.atualizarPermissaoNotificacao(registroDoador, false).subscribe(
+      data => {
+        this.messageService.add({severity:'success', summary:'Operação realizada', detail:'Usuário atualizado com sucesso!'})
+     },
+    (err) => {
+      this.messageService.add({severity:'error', summary:'Operação não realizada', detail: 'Falha: ' + err})    
+      console.log(err);
+    });
     
-    console.log("decode" + atob(registro));
-    
-    // this.doadorService.atualizarPermissaoNotificacao(registro, false).subscribe(data => {
-    // },
-    // (err) => {
-    //   console.log(err);
-    // });
-    
+  }
+  fecharBrowser(){
+    window.close;
   }
 
 }

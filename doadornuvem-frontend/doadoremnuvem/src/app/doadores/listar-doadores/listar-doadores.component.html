@@ -45,7 +45,6 @@
         <td>{{ d.fone }}</td>
         <td>{{ d.celular }}</td>
         <td> {{ d.data_proxima_doacao | date: 'dd/MM/yyyy' }}</td>
-        <!-- <td><button routerLink="/permissao-notificacao/{{ btoa(d.registro)}}"> Permissão</button></td> -->
         <td><p-selectButton [options]="permNotiOpcoes" [(ngModel)]="d.permissao_notificacao" optionLabel="label" optionValue="value" (onChange)="atualizarPermissaoNotificacao(d.registro, $event)"></p-selectButton></td>
       </tr>
     </ng-template>
