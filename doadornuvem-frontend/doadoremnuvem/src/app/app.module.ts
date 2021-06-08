@@ -47,6 +47,7 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import {ConfirmDialogModule } from 'primeng/confirmdialog';
 import {InputTextModule} from 'primeng/inputtext';
+import {PermissaoNotificacaoComponent} from '../publico/permissao-notificacao/permissao-notificacao.component';
 
 registerLocaleData(localePt, 'pt');
 
@@ -64,7 +65,8 @@ const appRoutes: Routes = [
   { path: 'editar-usuarios/:id', component: EditarUsuariosComponent},
   { path: 'login', component: LoginComponent},
   { path: 'doadores', component: ListarDoadoresComponent},
-  { path: 'mensagens', component: MensagensComponent}
+  { path: 'mensagens', component: MensagensComponent},
+  { path: 'permissao-notificacao/:id', component: PermissaoNotificacaoComponent}
 ];
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -84,12 +86,13 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     EditarUsuariosComponent,
     ListarDoadoresComponent,
     ReplacePipe,
-    MensagensComponent
+    MensagensComponent,
+    PermissaoNotificacaoComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, { onSameUrlNavigation: 'reload' }),
     HttpClientModule,
     FormsModule,
     TableModule,
@@ -118,6 +121,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ConfirmDialogModule,
     InputTextModule,
     
+  ],
+  exports: [
+    RouterModule,
   ],
   providers: [ConfirmationService, MessageService],
   bootstrap: [AppComponent]

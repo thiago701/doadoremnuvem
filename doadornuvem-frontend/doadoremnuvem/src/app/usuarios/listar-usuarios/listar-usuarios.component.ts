@@ -3,6 +3,7 @@ import { Usuario } from 'src/app/login/usuario';
 import { UsuarioService } from '../usuario.service';
 import { ConfirmationService, PrimeNGConfig, MessageService} from 'primeng/api';
 import { Table } from 'primeng/table';
+import {Router, NavigationEnd,ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-listar-usuarios',
@@ -19,15 +20,18 @@ export class ListarUsuariosComponent implements OnInit {
   constructor(
     private usuarioService: UsuarioService, 
     private confimationService : ConfirmationService,
-    private messageService : MessageService) 
+    private messageService : MessageService,
+    private router: Router, private activatedRoute: ActivatedRoute) 
     { }
 
   ngOnInit(): void {
-    this.listarUsuarios();
+    
     // Seta uma classe no BODY para controle de interface
     const body = document.getElementsByTagName('body')[0];
     body.className = '';
     body.classList.add('page-usuarios'); // page.sass + style.css
+    this.listarUsuarios();
+    
   }
 
   listarUsuarios() {
@@ -39,6 +43,7 @@ export class ListarUsuariosComponent implements OnInit {
         console.log(err);
       }
     );
+    this.refreshComponent();
   }
 
   editarUsuario(usuario: Usuario) {
@@ -52,7 +57,6 @@ export class ListarUsuariosComponent implements OnInit {
       icon: 'fas fa-question',
       accept:() => {
         this.usuarioService.excluirUsuario(usuario).subscribe(data => {});
-        this.listarUsuarios();
         this.messageService.add({severity:'success',
         summary:'Sucesso', detail:'Exclusão realizada!'})
       } ,
@@ -61,4 +65,7 @@ export class ListarUsuariosComponent implements OnInit {
       } 
     })
   }
+  refreshComponent(){
+    this.router.navigate([this.router.url])
+ }
 }

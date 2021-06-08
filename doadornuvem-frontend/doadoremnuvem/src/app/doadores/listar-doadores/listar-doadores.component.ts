@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import {Usuario} from '../../login/usuario';
 import {Doador} from '../Doador';
 import {DoadorService} from '../doador.service';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-listar-doadores',
@@ -12,9 +13,11 @@ export class ListarDoadoresComponent implements OnInit {
 
   public doadores: Array<Doador> = [];
   permNotiOpcoes: any[];
+  @ViewChild('dt') table: Table;
 
   constructor(private doadorService: DoadorService) {
     this.permNotiOpcoes = [{label: 'Não', value: false}, {label: 'Sim', value: true}];
+    
   }
 
   ngOnInit(): void {
@@ -42,5 +45,4 @@ export class ListarDoadoresComponent implements OnInit {
         console.log(err);
       });
   }
-
 }
