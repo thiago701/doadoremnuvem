@@ -1,19 +1,21 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Usuario } from 'src/app/login/usuario';
 import { UsuarioService } from '../usuario.service';
 import { ConfirmationService, PrimeNGConfig, MessageService} from 'primeng/api';
 import { Table } from 'primeng/table';
 import {Router, NavigationEnd,ActivatedRoute} from '@angular/router';
+import { DOCUMENT } from '@angular/common'; 
 
 @Component({
   selector: 'app-listar-usuarios',
   templateUrl: './listar-usuarios.component.html',
-  styleUrls: ['./listar-usuarios.component.css']
+  styleUrls: ['./listar-usuarios.component.css', './listar-usuarios.component.scss']
 })
 export class ListarUsuariosComponent implements OnInit {
 
   public usuarios: Array<Usuario> = [];
   public usuario : Usuario = new Usuario();
+  public rota : Router;
   
   @ViewChild('dt') table: Table;
 
@@ -21,6 +23,7 @@ export class ListarUsuariosComponent implements OnInit {
     private usuarioService: UsuarioService, 
     private confimationService : ConfirmationService,
     private messageService : MessageService,
+    @Inject(DOCUMENT) private _document: Document,
     private router: Router, private activatedRoute: ActivatedRoute) 
     { }
 
@@ -43,7 +46,6 @@ export class ListarUsuariosComponent implements OnInit {
         console.log(err);
       }
     );
-    this.refreshComponent();
   }
 
   editarUsuario(usuario: Usuario) {
@@ -56,16 +58,20 @@ export class ListarUsuariosComponent implements OnInit {
       header:'Confirmação',
       icon: 'fas fa-question',
       accept:() => {
-        this.usuarioService.excluirUsuario(usuario).subscribe(data => {});
+        this.usuarioService.excluirUsuario(usuario).subscribe(
+          (data) => {
+          this.listarUsuarios();
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
         this.messageService.add({severity:'success',
         summary:'Sucesso', detail:'Exclusão realizada!'})
       } ,
       reject:() =>{
         this.messageService.add({severity:'error', summary:'Cancelado', detail:'Operação não realizada'})
-      } 
-    })
-  }
-  refreshComponent(){
-    this.router.navigate([this.router.url])
+      }
+    })  
  }
 }

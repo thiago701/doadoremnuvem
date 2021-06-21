@@ -48,6 +48,12 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import {ConfirmDialogModule } from 'primeng/confirmdialog';
 import {InputTextModule} from 'primeng/inputtext';
 import {PermissaoNotificacaoComponent} from '../publico/permissao-notificacao/permissao-notificacao.component';
+import {ToolbarModule} from 'primeng/toolbar';
+import {SliderModule} from 'primeng/slider';
+import {RatingModule} from 'primeng/rating';
+import {DropdownModule} from 'primeng/dropdown';
+import {MultiSelectModule} from 'primeng/multiselect';
+import {ContextMenuModule} from 'primeng/contextmenu';
 
 registerLocaleData(localePt, 'pt');
 
@@ -88,6 +94,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ReplacePipe,
     MensagensComponent,
     PermissaoNotificacaoComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -120,7 +127,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     InputTextareaModule,
     ConfirmDialogModule,
     InputTextModule,
-    
+    ToolbarModule,
+    SliderModule,
+		MultiSelectModule,
+		ContextMenuModule,
+		DropdownModule,
+    RatingModule, 
   ],
   exports: [
     RouterModule,
