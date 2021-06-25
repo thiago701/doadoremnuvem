@@ -6,7 +6,7 @@ import { Table } from 'primeng/table';
 @Component({
   selector: 'app-listar-historico',
   templateUrl: './listar-historico.component.html',
-  styleUrls: ['./listar-historico.component.css']
+  styleUrls: ['./listar-historico.component.css', './listar-historico.component.scss']
 })
 export class ListarHistoricoComponent implements OnInit {
 

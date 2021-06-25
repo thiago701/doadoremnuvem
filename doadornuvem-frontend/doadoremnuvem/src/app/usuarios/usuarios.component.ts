@@ -4,6 +4,7 @@ import { data, valHooks } from 'jquery';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Usuario } from '../login/usuario';
 import { UsuarioService } from './usuario.service';
+import {Router} from '@angular/router' ;
 
 
 @Component({
@@ -23,7 +24,8 @@ export class UsuariosComponent implements OnInit {
     private usuarioService: UsuarioService,
     private confimationService : ConfirmationService,
     private messageService : MessageService,
-    private formBuilder :FormBuilder
+    private formBuilder :FormBuilder,
+    private router : Router,
     ) { 
       this.formCadastro = this.formBuilder.group({
         nome:[null, [Validators.required, Validators.minLength(3)]],
@@ -40,14 +42,32 @@ export class UsuariosComponent implements OnInit {
     // Seta uma classe no BODY para controle de interface
     const body = document.getElementsByTagName('body')[0];
     body.classList.add('page-usuarios');
-    
-   
   }
+
+  editarUsuario(usuario: Usuario) {
+    this.usuarioService.editarUsuario(usuario).subscribe(
+      (data) => {
+        this.messageService.add({severity:'success', summary:'Operação realizada', detail:'Usuário atualizado com sucesso!'})
+          this.getUsuarios();
+      },
+      (err) =>{
+        this.messageService.add({severity:'error', summary:'Operação não realizada', detail: 'Falha: ' + err})    
+      }
+    );
+     
+  }
+
+
   onSubmit() {
      if (this.formCadastro.valid){
       this.usuarioService.salvarUsuario(this.usuario).subscribe(
         (data) => {
          this.messageService.add({severity:'success', summary:'Operação realizada', detail:'Usuário cadastrado com sucesso!'}) 
+         this.router.navigateByUrl('/usuarios')
+         .then(() => {
+          window.location.reload();
+        });
+         this.getUsuarios();
         },
         (err) => {
           
@@ -66,7 +86,6 @@ export class UsuariosComponent implements OnInit {
        console.log(campo);      
      });      
     }
-    //this.getUsuarios();
   }
 
   cancelarCadastro(){
@@ -75,8 +94,6 @@ export class UsuariosComponent implements OnInit {
         this.messageService.add({severity:'error', summary:'Operação não realizada', detail:'Cadastro cancelado!'})
       } ); 
   }
-
-
   getUsuarios() {
     this.usuarioService.listarUsuarios().subscribe(
       (data) => {

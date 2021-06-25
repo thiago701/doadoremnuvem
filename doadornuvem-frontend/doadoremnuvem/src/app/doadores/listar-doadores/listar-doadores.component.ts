@@ -7,7 +7,14 @@ import { Table } from 'primeng/table';
 @Component({
   selector: 'app-listar-doadores',
   templateUrl: './listar-doadores.component.html',
-  styleUrls: ['./listar-doadores.component.css']
+  styles: [`
+        :host ::ng-deep .p-dialog .product-image {
+            width: 150px;
+            margin: 0 auto 2rem auto;
+            display: block;
+        }
+    `],
+  styleUrls: ['./listar-doadores.component.css', './listar-doadores.component.scss']
 })
 export class ListarDoadoresComponent implements OnInit {
 
