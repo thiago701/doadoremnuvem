@@ -6,13 +6,15 @@
             <img src="assets/img/logo-temp.png" alt="Doador em Nuvem">
         </div>
         </header>
-        <nav class="sidebar-nav" *ngIf="mostrarMenu">
+        <nav class="sidebar-nav" *ngIf="mostrarMenu"> 
             <ul id="menu">
-                <li class="mn-inicio"><a routerLink="/inicio"><i class="fas fa-home"></i> Início</a></li>
-                <li class="mn-doadores"><a routerLink="/doadores"><i class="fas fa-user-friends"></i> Doadores</a></li>
+                <li class="mn-inicio"><a routerLink="/inicio"><i class="fas fa-home"></i> Início</a></li>    
                 <li class="mn-historico"><a routerLink="/historico"><i class="fas fa-history"></i> Histórico</a></li>
-              <li class="mn-mensagens"><a routerLink="/mensagens"><i class="fa fa-comments"></i> Mensagens</a></li>
+                <li class="mn-mensagens"><a routerLink="/mensagens"><i class="fa fa-comments"></i> Mensagens</a></li>
                 <li class="mn-usuarios"><a routerLink="/usuarios"><i class="fas fa-user-tie"></i> Usuários</a></li>
+                <li class="mn-doadores">
+                    <p-panelMenu class="mn-doadores" [model]="itemsDoadores"></p-panelMenu>
+                </li>  
             </ul>
         </nav>
 

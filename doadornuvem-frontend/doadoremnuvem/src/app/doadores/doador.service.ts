@@ -22,4 +22,9 @@ export class DoadorService {
     console.log(url);
     return this.http.get<any>(url);
   }
+
+  listarDoadoresPorTipo(grupoAbo : string, fatorRH : string): Observable<Array<Doador>>{
+    const url = environment.apiUrl + environment.get_doador_tipo+ grupoAbo + '/' + fatorRH;
+    return this.http.get<any>(url);
+  }
 }
