@@ -8,7 +8,7 @@ interface Cidade{
 }
 
 interface Bairro{
-  nome: string
+  bairro: string
 }
 
 
@@ -25,6 +25,9 @@ export class DoadoresLocalidadeComponent implements OnInit {
   pesquisaZerada : boolean;
   permNotiOpcoes: any[];
   public doadores: Array<Doador> = [];
+  public bairrosDoadores:Array<Bairro> = [];
+  nomeCidade : string;
+  nomeBairro : string;
 
   constructor(private doadorService: DoadorService) {
     this.pesquisaZerada = false;
@@ -52,15 +55,32 @@ export class DoadoresLocalidadeComponent implements OnInit {
 
   listarDoaresLocalidade(){
     if (this.selectedCidade != null && this.selectedBairro != null){
-
-    }
+      this.nomeCidade = this.selectedCidade.nomeBD;
+      this.nomeBairro = this.selectedBairro.bairro;
+      this.doadorService.listarDoadoresPorLocalidade(this.nomeCidade, this.nomeBairro).subscribe(data =>{
+        this.doadores = data;
+        if (this.bairrosDoadores.length == 0)
+          this.pesquisaZerada = true;
+        else
+          this.pesquisaZerada = false;
+      },
+      (err) => {
+        console.log(err);
+    });
   }
+}
 
   listarBairrosByCidade(){
     if (this.selectedCidade != null){
-
+      
+    this.nomeCidade = this.selectedCidade.nomeBD;
+    this.doadorService.listarBairroPorCidade(this.nomeCidade).subscribe(data =>{
+      this.bairrosDoadores = data;
+    },
+    (err) => {
+      console.log(err);
+    });    
     }
-    console.log(this.selectedCidade.nomeBD);
   }
 
   enviarNotificacao(){

@@ -81,6 +81,23 @@ def listarDoadoresPorLocalidadeBD(cidade, bairro, mongodb):
     rgxBairro = re.compile('.*'+bairro+'.*', re.IGNORECASE)
     return list(collection.find({'cidade': rgxCidade, 'bairro': rgxBairro}))
 
+def listarBairrosPorCidadeBD(cidade, mongodb):
+    con = conexaoBanco(mongodb)
+    collection = con[mongodb.collection_doador]
+    rgxCidade = re.compile('.*'+cidade+'.*', re.IGNORECASE)
+    # return list(collection.group(key={"bairro":1}, condition={'cidade':rgxCidade},
+    #                              initial={"count":0}, reduce={}))
+    return list( collection.aggregate([
+        {"$match": {"cidade": rgxCidade}},
+        {"$group": {"_id": {"bairro": "$bairro"}}},
+        {"$project": {
 
+            "_id": 0,
+            "bairro": { "$trim": {"input": "$_id.bairro"}}
+        }},
+        {"$sort": {"bairro": 1}}
+
+    ])
+)
 #def listarDoadoresAptosParaNotificar(mongodb):
 # TODO implementação

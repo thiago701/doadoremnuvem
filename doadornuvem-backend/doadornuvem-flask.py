@@ -310,6 +310,22 @@ def listarDoadoresPorLocalidade(cidade, bairro):
         raise Exception("Ocorreu um erro geral!")
     return respostaDoadorJson(lista)
 
+# Doador Listar Bairros por cidade
+@app.route('/api/doadores/listar-bairro-por-cidade/<cidade>', methods=['GET'])
+def listarBairrosPorCidade(cidade):
+    try:
+        if (mongoDBonline):
+            # executa metodo principal
+            lista = listarBairrosPorCidadeBD(cidade, MongoDBConf())
+            # lista = listarDoadoresPorLocalidadeBD(cidade,'BANCARIOS', MongoDBConf())
+        else:
+            print('mongodb: offline')
+            raise Exception('Falha de comunicação com mongodb!')
+    except Exception as e:
+        logging.error(e)
+        raise Exception("Ocorreu um erro geral!")
+    return respostaBairroJson(lista)
+
 # Mensagens para notificação
 @app.route('/api/mensagens/editar-mensagens-notificacao/<msg_geral>/<msg_tipo>/<msg_localidade>', methods=['GET'])
 def atualizarMensagensNotificacao(msg_geral, msg_tipo, msg_localidade):
@@ -389,6 +405,14 @@ def respostaDoadorJson(lista):
             'data_ultima_doacao': r['data_ultima_doacao'].strip(),
             'data_proxima_doacao': r['data_proxima_doacao'].strip(),
             'permissao_notificacao': r['permissao_notificacao']
+        })
+    return jsonify(resposta)
+
+def respostaBairroJson(lista):
+    resposta = list()
+    for r in lista:
+        resposta.append({
+            'bairro': r['bairro'].strip() if not r['bairro'] is None else '',
         })
     return jsonify(resposta)
 

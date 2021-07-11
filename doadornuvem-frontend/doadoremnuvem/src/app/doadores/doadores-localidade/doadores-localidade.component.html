@@ -8,7 +8,7 @@
               <span class="p-input-icon-left p-ml-auto">
                 <p-dropdown placeholder="Selecione a cidade" (click)="listarBairrosByCidade()" [options]="cidades" [(ngModel)]="selectedCidade" optionLabel="nome"></p-dropdown>  
                 &nbsp;
-                <p-dropdown placeholder="Selecione o bairro" [options]="bairros" [(ngModel)]="selectedBairro" optionLabel="nome"></p-dropdown>  
+                <p-dropdown placeholder="Selecione o bairro" [options]="bairrosDoadores" [(ngModel)]="selectedBairro" optionLabel="bairro"></p-dropdown>  
                 &nbsp;
                 <button (click)="listarDoaresLocalidade()" pTooltip="Pesquisar por cidade e bairro selecionados" tooltipPosition="bottom" pButton pRipple label="Pesquisar" icon="pi pi-search" 
                     class="p-button-secondary p-mr-2 p-d-inline-block">
