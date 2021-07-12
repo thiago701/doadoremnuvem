@@ -8,3 +8,5 @@ collection_historico = "historico"
 collection_usuario = "usuario"
 collection_doador = "doador"
 collection_mensagem = "mensagem"
+profile = "/sistemas/doadoremnuvem/profile"
+tempo_job = 1

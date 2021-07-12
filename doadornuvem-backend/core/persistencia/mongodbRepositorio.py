@@ -4,6 +4,8 @@ import re
 from bson import ObjectId
 
 FORMATO_DATA = '%Y-%m-%d %H:%M:%S'
+FORMATO_DATA_T = '%Y-%m-%dT%H:%M:%S'
+FORMATO_DATA_SIMPLES = '%Y-%m-%d'
 
 """
     Repositório para persistência e consultas de dados

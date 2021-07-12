@@ -3,6 +3,8 @@ from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 import flask_monitoringdashboard as dashboard
 import logging
+import atexit
+from datetime import datetime
 from dynaconf import FlaskDynaconf
 from .config import settings as conf
 from .mongoDBConf import MongoDBConf
@@ -11,6 +13,9 @@ from .core.persistencia.usuarioRepositorio import *
 from .core.persistencia.historicoRepositorio import *
 from .core.persistencia.doadorRepositorio import *
 from .core.persistencia.mensagensRepositorio import *
+import pandas as pd
+from .core.whatsapp.notificaDoadores import *
+from apscheduler.schedulers.background import BackgroundScheduler
 
 """
     ----------------------------------------------------
@@ -53,8 +58,95 @@ if conf.auto_start_docker_mongodb and mongoDBonline == False:
 
 print('sistema/versão:', __sistema__)
 
+""" JOB """
+
+def job():
+    print('[Rotina] Job notifica doadores aptos executado')
+    notificarWhatsapp()
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=job, trigger="interval", minutes=conf.tempo_job)
+scheduler.start()
+
+# Shut down the scheduler when exiting the app
+atexit.register(lambda: scheduler.shutdown())
+
 """ SERVIÇOS """
 
+# Teste
+@app.route('/api/notificar', methods=['GET', 'POST'])
+def notificarWhatsapp():
+    # entradas
+    doadoresPrimeiraVez = list()
+    doadoresAptosMasculino = list()
+    doadoresAptosFeminino = list()
+    # recupera mensagens
+    mensagensConfig = listarMensagensBD(MongoDBConf())
+    # doadores primeira vez
+    doadoresPrimeiraVez = listarDoadoresParaNotificarPrimeiraVezBD(MongoDBConf())
+    print('Analisando - total primeira vez: ', len(doadoresPrimeiraVez))
+
+    try:
+        # etapa 1
+        for doador in doadoresPrimeiraVez:
+            contatos_df = pd.DataFrame({
+                'Pessoa': doador['nome'],
+                'Número': doador['celular'],
+                'Mensagem': [mensagensConfig[0]['msg_notifica_geral']]})
+            # atualiza data ultima notificacao
+            editarUltimaNotificacaoDoadorBD(doador['registro'], str(datetime.date.today()), MongoDBConf())
+            # notifica whatsapp
+            enviaNotificacao(contatos_df)
+            # SUCESSO
+            salvarHistoricoBD('SUCESSO', 'NOTIFICACAO_APTOS', '', 1, MongoDBConf())
+
+        # masculino
+        doadoresAptosMasculino = listarDoadoresParaNotificaMasculinoBD(MongoDBConf())
+        print('Analisando - total masculino: ', len(doadoresAptosMasculino))
+
+        # etapa 2
+        for doador in doadoresAptosMasculino:
+            #print('data_ultima_notificacao:', doador['data_ultima_notificacao'])
+            diferenca = datetime.datetime.now() - datetime.datetime.strptime(doador['data_ultima_notificacao'], FORMATO_DATA_SIMPLES)
+            if diferenca.days >= 60 and datetime.datetime.strptime(doador['data_proxima_doacao'][:-5], FORMATO_DATA_T) < datetime.datetime.now():
+                print('tentando notificar... ', doador['celular'] + ' com ' + str(diferenca.days))
+                print('proxima:', doador['data_proxima_doacao'][:-5])
+                contatos_df = pd.DataFrame({
+                    'Pessoa': doador['nome'],
+                    'Número': doador['celular'],
+                    'Mensagem': [mensagensConfig[0]['msg_notifica_geral']]})
+                # atualiza data ultima notificacao
+                editarUltimaNotificacaoDoadorBD(doador['registro'], str(datetime.date.today()), MongoDBConf())
+                # notifica whatsapp
+                enviaNotificacao(contatos_df)
+                # SUCESSO
+                salvarHistoricoBD('SUCESSO', 'NOTIFICACAO_APTOS', '', 1, MongoDBConf())
+
+        # feminino
+        doadoresAptosFeminino = listarDoadoresParaNotificaFemininoBD(MongoDBConf())
+        print('Analisando - total feminino: ', len(doadoresAptosFeminino))
+        # etapa 3
+        for doador in doadoresAptosFeminino:
+            #print('data_ultima_notificacao:', doador['data_ultima_notificacao'])
+            diferenca = datetime.datetime.now() - datetime.datetime.strptime(doador['data_ultima_notificacao'], FORMATO_DATA_SIMPLES)
+            if diferenca.days >= 90 and datetime.datetime.strptime(doador['data_proxima_doacao'][:-5], FORMATO_DATA_T) < datetime.datetime.now():
+                print('tentando notificar... ', doador['celular'] + ' com ' + str(diferenca.days))
+                print('proxima:', doador['data_proxima_doacao'][:-5])
+                contatos_df = pd.DataFrame({
+                    'Pessoa': doador['nome'],
+                    'Número': doador['celular'],
+                    'Mensagem': [mensagensConfig[0]['msg_notifica_geral']]})
+                # atualiza data ultima notificacao
+                editarUltimaNotificacaoDoadorBD(doador['registro'], str(datetime.date.today()), MongoDBConf())
+                # notifica whatsapp
+                enviaNotificacao(contatos_df)
+                # SUCESSO
+                salvarHistoricoBD('SUCESSO', 'NOTIFICACAO_APTOS', '', 1, MongoDBConf())
+
+    except Exception as e:
+        logging.error(e)
+        salvarHistoricoBD('FALHA', 'NOTIFICACAO_APTOS', str(e), 1, MongoDBConf())
+    return 'Notificado com sucesso!'
 
 # Historico
 @app.route('/api/historico/salvar', methods=['GET', 'POST'])
