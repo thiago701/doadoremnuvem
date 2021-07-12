@@ -1,4 +1,5 @@
 from .mongodbRepositorio import conexaoBanco, inserirDocumento
+import datetime
 from bson import ObjectId
 import re
 
@@ -21,7 +22,8 @@ def salvarDoadorBD(registro, nome, dt_cadastro, cidade,
         'sexo': sexo,
         'dtnasc': dt_nascimento,
         'data_ultima_doacao': dt_ultima_doacao,
-        'data_proxima_doacao': dt_proximo_doacao
+        'data_proxima_doacao': dt_proximo_doacao,
+        'data_ultima_notificacao': ''
     }
     # salvar na coleção
     id_doc = inserirDocumento(con, docNovo, mongodb.collection_doador)
@@ -30,7 +32,7 @@ def salvarDoadorBD(registro, nome, dt_cadastro, cidade,
 
 def editarDoadorBD(registro, nome, dt_cadastro, cidade,
                    bairro, grupoabo, fatorrh, fone, celular, sexo,
-                   dt_nascimento, dt_ultima_doacao, dt_proximo_doacao, mongodb):
+                   dt_nascimento, dt_ultima_doacao, dt_proximo_doacao, data_ultima_notificacao, mongodb):
     # mongodb
     con = conexaoBanco(mongodb)
     # cria documento formato json
@@ -47,7 +49,8 @@ def editarDoadorBD(registro, nome, dt_cadastro, cidade,
         'sexo': sexo,
         'dtnasc': dt_nascimento,
         'data_ultima_doacao': dt_ultima_doacao,
-        'data_proxima_doacao': dt_proximo_doacao
+        'data_proxima_doacao': dt_proximo_doacao,
+        'data_ultima_notificacao': data_ultima_notificacao
     }
     # salvar na coleção
     #id_doc = editarDocumentoDoador(con, docNovo, mongodb.collection_doador)
@@ -62,10 +65,47 @@ def editarNotificacaoDoadorBD(registro, permissao, mongodb):
     id = servico.update_one({"registro": registro},
                             {"$set": {"permissao_notificacao": permissao}}, upsert=True)
 
+def editarUltimaNotificacaoDoadorBD(registro, data, mongodb):
+    # mongodb
+    con = conexaoBanco(mongodb)
+    print('NOTIFICADO: atualizando data_ultima_notificacao:', registro, data)
+    # salvar na coleção
+    servico = con[mongodb.collection_doador]
+    id = servico.update_one({"registro": registro},
+                            {"$set": {"data_ultima_notificacao": (data)}}, upsert=True)
+
 def listarDoadoresBD(mongodb):
     con = conexaoBanco(mongodb)
     collection = con[mongodb.collection_doador]
     return list(collection.find())[0:100]
+
+def listarDoadoresParaNotificarPrimeiraVezBD(mongodb):
+    con = conexaoBanco(mongodb)
+    collection = con[mongodb.collection_doador]
+    return list(collection.find({'data_ultima_notificacao': ''}))[0:100]
+
+def listarDoadoresParaNotificaMasculinoBD(mongodb):
+    con = conexaoBanco(mongodb)
+    collection = con[mongodb.collection_doador]
+    return list(collection.find({'sexo': 'MASCULINO'}))[0:100]
+
+def listarDoadoresParaNotificaFemininoBD(mongodb):
+    con = conexaoBanco(mongodb)
+    collection = con[mongodb.collection_doador]
+    #dataInicio = datetime.datetime.now() - datetime.timedelta(90)
+    #dataFim = datetime.datetime.now()
+    return list(collection.find({'sexo': 'FEMININO'}))[0:100]
+                                 #'data_ultima_notificacao': {'$gte': dataInicio, '$lt': dataFim}}
+
+
+def listarDoadoresParaNotificarMasculinoBD(mongodb):
+    con = conexaoBanco(mongodb)
+    collection = con[mongodb.collection_doador]
+    dataInicio = datetime.datetime.now() - datetime.timedelta(60)
+    dataFim = datetime.datetime.now()
+    return list(collection.find({'sexo': 'MASCULINO',
+                                 'data_ultima_notificacao': {'$gte': dataInicio, '$lt': dataFim}}
+                                ))[0:100]
 
 def listarDoadoresPorTipoBD(grupo, fator, mongodb):
     con = conexaoBanco(mongodb)
