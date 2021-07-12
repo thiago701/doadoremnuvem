@@ -22,4 +22,19 @@ export class DoadorService {
     console.log(url);
     return this.http.get<any>(url);
   }
+
+  listarDoadoresPorTipo(grupoAbo : string, fatorRH : string): Observable<Array<Doador>>{
+    const url = environment.apiUrl + environment.get_doador_tipo + grupoAbo + '/' + fatorRH;
+    return this.http.get<any>(url);
+  }
+
+  listarDoadoresPorLocalidade(cidade: string, bairro: string):Observable<Array<Doador>>{
+    const url = environment.apiUrl+ environment.get_doador_localidade+cidade + '/'+ bairro;
+    return this.http.get<any>(url);
+  }
+
+  listarBairroPorCidade(cidade:string):Observable<Array<Doador>>{
+    const url = environment.apiUrl + environment.get_bairro_cidade + cidade;
+    return this.http.get<any>(url);  
+  }
 }

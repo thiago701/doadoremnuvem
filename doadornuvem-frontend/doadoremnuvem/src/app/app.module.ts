@@ -54,6 +54,11 @@ import {RatingModule} from 'primeng/rating';
 import {DropdownModule} from 'primeng/dropdown';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {ContextMenuModule} from 'primeng/contextmenu';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+import {DoadoresTipoComponent } from './doadores/doadores-tipo/doadores-tipo.component';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { MenuModule } from 'primeng/menu';
+import {DoadoresLocalidadeComponent} from './doadores/doadores-localidade/doadores-localidade.component';
 
 registerLocaleData(localePt, 'pt');
 
@@ -72,7 +77,9 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'doadores', component: ListarDoadoresComponent},
   { path: 'mensagens', component: MensagensComponent},
-  { path: 'permissao-notificacao/:id', component: PermissaoNotificacaoComponent}
+  { path: 'permissao-notificacao/:id', component: PermissaoNotificacaoComponent},
+  { path: 'doadores-tipo', component: DoadoresTipoComponent},
+  { path: 'doadores-localidade', component: DoadoresLocalidadeComponent}
 ];
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -94,6 +101,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ReplacePipe,
     MensagensComponent,
     PermissaoNotificacaoComponent,
+    DoadoresTipoComponent,
+    DoadoresLocalidadeComponent
     
   ],
   imports: [
@@ -133,6 +142,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 		ContextMenuModule,
 		DropdownModule,
     RatingModule, 
+    TieredMenuModule,
+    PanelMenuModule,
+    MenuModule
   ],
   exports: [
     RouterModule,

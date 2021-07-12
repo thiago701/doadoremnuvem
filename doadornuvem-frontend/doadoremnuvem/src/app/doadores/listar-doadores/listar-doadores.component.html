@@ -4,7 +4,8 @@
 </header>
   <div class="card">
     <div *ngIf="doadores.length == 0">Nenhum registro encontrado.</div>
-    <p-table #dt [value]="doadores" [rowHover]="true"  
+    <p-table #dt [value]="doadores" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" 
+    [paginator]="true" [rowsPerPageOptions]="[10,25,50]"  
     [globalFilterFields]="['nome','grupoabo','dtnasc', 'celular', 'data_proxima_doacao']">
       <ng-template pTemplate="caption">
         <div class="header">            

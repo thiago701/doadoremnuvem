@@ -21,8 +21,8 @@
       </ng-template>
     </p-toolbar>  
     <div *ngIf="usuarios.length == 0">Nenhum registro encontrado.</div>
-      <p-table #dt [value]="usuarios" styleClass="table" [rowHover]="true" 
-      [globalFilterFields]="['nome','email','perfil','cpf']">
+      <p-table #dt [value]="usuarios" styleClass="table" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+      [globalFilterFields]="['nome','email','perfil','cpf']" [paginator]="true" [rowsPerPageOptions]="[10,25,50]"> 
         <ng-template pTemplate="header">
           <tr>
             <th pSortableColumn="nome">Nome <p-sortIcon field="usuarios.nome"></p-sortIcon>

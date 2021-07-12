@@ -14,7 +14,9 @@ export const environment = {
 
   get_doador_listar: '/doadores/listar',
   get_permissao_notificao: '/doadores/editar-permissao-notificacao/',
-
+  get_doador_tipo: '/doadores/listar-por-tipo/',
+  get_doador_localidade:'/doadores/listar-por-localidade/',
+  get_bairro_cidade:'/doadores/listar-bairro-por-cidade/',
   get_mensagem_listar: '/mensagens/listar',
   get_atualizar_mensagem: '/mensagens/editar-mensagens-notificacao/',
 

@@ -5,7 +5,11 @@
 
 <div class="card">
     <div *ngIf="historico.length == 0">Nenhum registro encontrado.</div>
-    <p-table #dt [value]=historico [rowHover]="true" [globalFilterFields]="['dt_operacao','status','tp_operacao', 'qt_doadores_notificados','ds_log']">
+    <p-table #dt [value]=historico [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" 
+    [paginator]="true" [rowsPerPageOptions]="[10,25,50]"
+      [globalFilterFields]="['dt_operacao','status','tp_operacao', 'qt_doadores_notificados','ds_log']"
+    
+    >
       <ng-template pTemplate="caption">
         <div class="header">            
           <span class="p-input-icon-left p-ml-auto">
