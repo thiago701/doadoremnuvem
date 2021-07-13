@@ -92,7 +92,7 @@ export class DoadoresLocalidadeComponent implements OnInit {
         this.registrosDoadores.push(this.doadores[i].registro.toString());
       }
     }
-    this.doadorService.notificarDoadorPorCodigo(this.registrosDoadores, 'localidade');
+    this.doadorService.notificarDoadorPorCodigo(this.registrosDoadores, 'localidade').subscribe(data => data);
     this.messageService.add({severity:'success', summary:'Operação realizada', detail:'Notificação em andamento...'});
   }
 }

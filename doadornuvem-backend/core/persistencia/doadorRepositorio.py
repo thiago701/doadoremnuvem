@@ -142,7 +142,7 @@ def listarBairrosPorCidadeBD(cidade, mongodb):
         {"$project": {
 
             "_id": 0,
-            "bairro": { "$trim": {"input": "$_id.bairro"}}
+            "bairro": "$_id.bairro"
         }},
         {"$sort": {"bairro": 1}}
 
