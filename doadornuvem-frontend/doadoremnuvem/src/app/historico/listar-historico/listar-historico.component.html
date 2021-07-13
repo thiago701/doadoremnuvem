@@ -1,38 +1,57 @@
+<main>
 <header class="page-header">
   <h1><i class="fas fa-history"></i> Histórico de Notificações</h1>
 </header>
 
-<article class="page-content">
+<div class="card">
+    <div *ngIf="historico.length == 0">Nenhum registro encontrado.</div>
+    <p-table #dt [value]=historico [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    [paginator]="true" [rowsPerPageOptions]="[10,25,50]"
+      [globalFilterFields]="['dt_operacao','status','tp_operacao', 'qt_doadores_notificados','ds_log']"
 
-    <div class="page-content-card content">
+    >
+      <ng-template pTemplate="caption">
+        <div class="header">
+          <span class="p-input-icon-left p-ml-auto">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+              placeholder="Pesquisar" />
+          </span>
+        </div>
+      </ng-template>
 
-    <div *ngIf="historico.length == 0">Carregando...</div>
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="dt_operacao">Data <p-sortIcon field="historico.dt_operacao"></p-sortIcon>
+          </th>
+          <th pSortableColumn="status">Status <p-sortIcon field="historico.status"></p-sortIcon>
+          </th>
+          <th pSortableColumn="tp_operacao">Tipo <p-sortIcon field="historico.tp_operacao"></p-sortIcon>
+          </th>
+          <th style="width: 8rem" pSortableColumn="qt_doadores_notificados">Quant. <p-sortIcon field="historico.qt_doadores_notificados"></p-sortIcon>
+          </th>
+          <th pSortableColumn="ds_log">Log <p-sortIcon field="historico.ds_log"></p-sortIcon>
+          </th>
+          <!--th style="width: 5rem">Ações</th-->
+        </tr>
+        </ng-template>
 
-    <table *ngIf="historico.length == 0" class="table">
-      <thead><tr>Não há histórico de notificações para ser exibido</tr>
-      <tr>
-        <th scope="col">Data</th>
-        <th scope="col">Status</th>
-        <th scope="col">Tipo</th>
-        <th scope="col">Quant.</th>
-        <th scope="col">Log</th>
-        <th scope="col">Ações</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let h of historico; index as i">
-        <td>{{ h.dt_operacao | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
-        <td>{{ h.status }}</td>
-        <td>{{ h.tp_operacao }}</td>
-        <td>{{ h.qt_doadores_notificados }}</td>
-        <td>{{ h.ds_log }}</td>
-        <td>
-          <button type="button" class="btn btn-warning" routerLink="/historico" *ngIf="h.status === 'FALHA'" (click)="reprocessarFalha(h)"><i class="fas fa-reply-all"></i> Repetir</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-
+      <!-- <tr *ngFor="let h of historico; index as i"> -->
+      <ng-template pTemplate="body" let-h>
+        <tr>
+          <td>{{ h.dt_operacao | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+          <td>{{ h.status }}</td>
+          <td>{{ h.tp_operacao }}</td>
+          <td>{{ h.qt_doadores_notificados }}</td>
+          <td>{{ h.ds_log }}</td>
+          <!--td>
+            <button pTooltip="Repetir envio" tooltipPosition="bottom" type="button"
+            pButton pRipple icon="fas fa-reply-all" class="p-button-rounded p-button-warning"
+            routerLink="/historico" *ngIf="h.status === 'FALHA'"
+              (click)="reprocessarFalha(h)"></button>
+          </td-->
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
-
-</article>
+</main>

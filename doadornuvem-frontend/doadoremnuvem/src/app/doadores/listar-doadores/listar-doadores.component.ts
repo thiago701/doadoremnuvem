@@ -1,20 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import {Usuario} from '../../login/usuario';
 import {Doador} from '../Doador';
 import {DoadorService} from '../doador.service';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-listar-doadores',
   templateUrl: './listar-doadores.component.html',
-  styleUrls: ['./listar-doadores.component.css']
+  styles: [`
+        :host ::ng-deep .p-dialog .product-image {
+            width: 150px;
+            margin: 0 auto 2rem auto;
+            display: block;
+        }
+    `],
+  styleUrls: ['./listar-doadores.component.css', './listar-doadores.component.scss']
 })
 export class ListarDoadoresComponent implements OnInit {
 
   public doadores: Array<Doador> = [];
   permNotiOpcoes: any[];
+  @ViewChild('dt') table: Table;
 
   constructor(private doadorService: DoadorService) {
     this.permNotiOpcoes = [{label: 'Não', value: false}, {label: 'Sim', value: true}];
+    
   }
 
   ngOnInit(): void {
@@ -42,5 +52,4 @@ export class ListarDoadoresComponent implements OnInit {
         console.log(err);
       });
   }
-
 }

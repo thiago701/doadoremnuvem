@@ -46,7 +46,19 @@ import { MensagensComponent } from './notificacao/mensagens/mensagens.component'
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import {ConfirmDialogModule } from 'primeng/confirmdialog';
-//import { CustomerService } from './customerservice';
+import {InputTextModule} from 'primeng/inputtext';
+import {PermissaoNotificacaoComponent} from '../publico/permissao-notificacao/permissao-notificacao.component';
+import {ToolbarModule} from 'primeng/toolbar';
+import {SliderModule} from 'primeng/slider';
+import {RatingModule} from 'primeng/rating';
+import {DropdownModule} from 'primeng/dropdown';
+import {MultiSelectModule} from 'primeng/multiselect';
+import {ContextMenuModule} from 'primeng/contextmenu';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+import {DoadoresTipoComponent } from './doadores/doadores-tipo/doadores-tipo.component';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { MenuModule } from 'primeng/menu';
+import {DoadoresLocalidadeComponent} from './doadores/doadores-localidade/doadores-localidade.component';
 
 registerLocaleData(localePt, 'pt');
 
@@ -64,7 +76,10 @@ const appRoutes: Routes = [
   { path: 'editar-usuarios/:id', component: EditarUsuariosComponent},
   { path: 'login', component: LoginComponent},
   { path: 'doadores', component: ListarDoadoresComponent},
-  { path: 'mensagens', component: MensagensComponent}
+  { path: 'mensagens', component: MensagensComponent},
+  { path: 'permissao-notificacao/:id', component: PermissaoNotificacaoComponent},
+  { path: 'doadores-tipo', component: DoadoresTipoComponent},
+  { path: 'doadores-localidade', component: DoadoresLocalidadeComponent}
 ];
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -84,12 +99,16 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     EditarUsuariosComponent,
     ListarDoadoresComponent,
     ReplacePipe,
-    MensagensComponent
+    MensagensComponent,
+    PermissaoNotificacaoComponent,
+    DoadoresTipoComponent,
+    DoadoresLocalidadeComponent
+    
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, { onSameUrlNavigation: 'reload' }),
     HttpClientModule,
     FormsModule,
     TableModule,
@@ -116,7 +135,19 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SelectButtonModule,
     InputTextareaModule,
     ConfirmDialogModule,
-    
+    InputTextModule,
+    ToolbarModule,
+    SliderModule,
+		MultiSelectModule,
+		ContextMenuModule,
+		DropdownModule,
+    RatingModule, 
+    TieredMenuModule,
+    PanelMenuModule,
+    MenuModule
+  ],
+  exports: [
+    RouterModule,
   ],
   providers: [ConfirmationService, MessageService],
   bootstrap: [AppComponent]

@@ -9,4 +9,5 @@ export class Doador {
   sexo: string;
   data_proxima_doacao: Date;
   permissao_notificacao: boolean;
+  bairro : string;
 }

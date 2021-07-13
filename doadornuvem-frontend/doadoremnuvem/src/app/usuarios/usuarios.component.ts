@@ -4,6 +4,8 @@ import { data, valHooks } from 'jquery';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Usuario } from '../login/usuario';
 import { UsuarioService } from './usuario.service';
+import {Router} from '@angular/router' ;
+
 
 @Component({
   selector: 'app-usuarios',
@@ -22,7 +24,8 @@ export class UsuariosComponent implements OnInit {
     private usuarioService: UsuarioService,
     private confimationService : ConfirmationService,
     private messageService : MessageService,
-    private formBuilder :FormBuilder
+    private formBuilder :FormBuilder,
+    private router : Router,
     ) { 
       this.formCadastro = this.formBuilder.group({
         nome:[null, [Validators.required, Validators.minLength(3)]],
@@ -39,16 +42,32 @@ export class UsuariosComponent implements OnInit {
     // Seta uma classe no BODY para controle de interface
     const body = document.getElementsByTagName('body')[0];
     body.classList.add('page-usuarios');
-    
-   
   }
+
+  editarUsuario(usuario: Usuario) {
+    this.usuarioService.editarUsuario(usuario).subscribe(
+      (data) => {
+        this.messageService.add({severity:'success', summary:'Operação realizada', detail:'Usuário atualizado com sucesso!'})
+          this.getUsuarios();
+      },
+      (err) =>{
+        this.messageService.add({severity:'error', summary:'Operação não realizada', detail: 'Falha: ' + err})    
+      }
+    );
+     
+  }
+
+
   onSubmit() {
      if (this.formCadastro.valid){
       this.usuarioService.salvarUsuario(this.usuario).subscribe(
         (data) => {
-         console.log("dados"+data[1])
-          this.messageService.add({severity:'success', summary:'Operação realizada', detail:'Usuário atualizado com sucesso!'})
-          this.getUsuarios();
+         this.messageService.add({severity:'success', summary:'Operação realizada', detail:'Usuário cadastrado com sucesso!'}) 
+         this.router.navigateByUrl('/usuarios')
+         .then(() => {
+          window.location.reload();
+        });
+         this.getUsuarios();
         },
         (err) => {
           
@@ -62,7 +81,7 @@ export class UsuariosComponent implements OnInit {
         }   
       );
     }else{
-      console.log('Formalário inválid');
+      console.log('Formulário inválido');
      Object.keys(this.formCadastro.controls).forEach(campo => {
        console.log(campo);      
      });      
@@ -75,8 +94,6 @@ export class UsuariosComponent implements OnInit {
         this.messageService.add({severity:'error', summary:'Operação não realizada', detail:'Cadastro cancelado!'})
       } ); 
   }
-
-
   getUsuarios() {
     this.usuarioService.listarUsuarios().subscribe(
       (data) => {
@@ -97,4 +114,66 @@ export class UsuariosComponent implements OnInit {
 
     }
   }
+  validarCpf(cpf:string){
+    
+    if (cpf == null) {
+      return false;
+    }
+  
+    if (cpf.length < 11) {
+      return false;
+    }
+  
+    if ((cpf == '00000000000') || (cpf == '11111111111') || (cpf == '22222222222') || (cpf == '33333333333') || (cpf == '44444444444') || (cpf == '55555555555') || (cpf == '66666666666') || (cpf == '77777777777') || (cpf == '88888888888') || (cpf == '99999999999')) {
+      return false;
+    }
+    let numero: number = 0;
+    let caracter: string = '';
+    let numeros: string = '0123456789';
+    let j: number = 10;
+    let somatorio: number = 0;
+    let resto: number = 0;
+    let digito1: number = 0;
+    let digito2: number = 0;
+    let cpfAux: string = '';
+    cpfAux = cpf.toString();
+    cpfAux = cpfAux.substring(0,9);
+    for (let i: number = 0; i < 9; i++) {
+        caracter = cpfAux.charAt(i);
+        if (numeros.search(caracter) == -1) {
+          return false;
+        }
+        numero = Number(caracter);
+        somatorio = somatorio + (numero * j);
+        j--;
+    }
+    resto = somatorio % 11;
+    digito1 = 11 - resto;
+    if (digito1 > 9) {
+        digito1 = 0;
+    }
+    j = 11;
+    somatorio = 0;
+    cpfAux = cpfAux + digito1;
+    for (let i: number = 0; i < 10; i++) {
+        caracter = cpfAux.charAt(i);
+        numero = Number(caracter);
+        somatorio = somatorio + (numero * j);
+        j--;
+    }
+    resto = somatorio % 11;
+    digito2 = 11 - resto;
+    if (digito2 > 9) {
+        digito2 = 0;
+    }
+    cpfAux = cpfAux + digito2;
+    if (cpf != cpfAux) {
+       
+      return false;
+    }
+    else {
+        return true;
+    }
+}
+
 }

@@ -17,12 +17,12 @@
                     <small *ngIf="formCadastro.controls.nome.errors?.required" class="p-error" style="font-style: italic;" >
                       Campo obrigatório
                     </small>
-                </ng-container>  
+                </ng-container>
                 </div>
               </div>
                 <div class="col-sm-6">
                     <div class="form-item ">
-                        <label>Perfil</label>
+                        <label>Perfil*</label>
                         <select [(ngModel)]="usuario.perfil" formControlName="perfil"
                                 class="custom-select" name="perfil" id="perfil" pInputText placeholder="Perfil" required>
                             <option value="ADMIN">Administrador</option>
@@ -31,7 +31,7 @@
                             <small *ngIf="formCadastro.controls.perfil.errors?.required" class="p-error" style="font-style: italic;" >
                               Campo obrigatório
                             </small>
-                        </ng-container>  
+                        </ng-container>
                     </div>
                 </div>
             </div>
@@ -39,23 +39,32 @@
                 <div class="col-sm-6">
                     <div class="form-item ">
                         <label>CPF (Apenas números)*</label>
-                      <input [(ngModel)]="usuario.cpf" formControlName="documento" class="form-control required" Nname="documento" id="documento" numeric type="number" [maxLength]="11" pInputText placeholder="Número do CPF"  required>
+                      <input [(ngModel)]="usuario.cpf" formControlName="documento" class="form-control required" name="documento" id="documento" numeric type="text" minlength="11" 
+                        maxLength="11" pInputText placeholder="Número do CPF" required
+                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                        type = "number"  maxlength = "11">
                       <ng-container *ngIf="formCadastro.controls.documento.touched">
                         <small *ngIf="formCadastro.controls.documento.errors?.required" class="p-error" style="font-style: italic;" >
                           Campo obrigatório
+                          <br>
                         </small>
-                    </ng-container>    
+                      </ng-container>
+                      <ng-container *ngIf="formCadastro.controls.documento.dirty">
+                        <small *ngIf="validarCpf(usuario.cpf) == false" class="p-error" style="font-style: italic;">
+                          Número de CPF inválido
+                        </small>
+                    </ng-container>
                     </div>
                 </div>
               <div class="col-sm-6">
                 <div class="form-item ">
                   <label>E-mail*</label>
-                  <input [(ngModel)]="usuario.email"  formControlName= "email" class="form-control required" Name="email" id="email" type="email" pInputText placeholder="nome@email.com" required>
+                  <input [(ngModel)]="usuario.email"  formControlName= "email" class="form-control required" Name="email" id="email" type="email" ngmodel pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" pInputText placeholder="nome@email.com" required>
                   <ng-container *ngIf="formCadastro.controls.email.touched">
                   <small *ngIf="formCadastro.controls.email.errors?.required" class="p-error" style="font-style: italic;" >
                     Campo obrigatório
                   </small>
-                  <small *ngIf="formCadastro.controls.email.errors?.email" class="p-error" style="font-style: italic;" >
+                  <small *ngIf="formCadastro.controls.email.errors?.pattern" class="p-error" style="font-style: italic;" >
                     E-mail inválido
                   </small>
                 </ng-container>
@@ -72,23 +81,23 @@
                         <small *ngIf="formCadastro.controls.endereco.errors?.required" class="p-error" style="font-style: italic;" >
                             Campo obrigatório
                           </small>
-                        </ng-container>  
+                        </ng-container>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="form-item ">
                         <label>Telefone*</label>
-                        <input [(ngModel)]="usuario.telefone" formControlName="telefone" class="form-control required" name="telefone" numeric type="number" pInputText placeholder="(99) 99999-9999"  required>
+                        <input type="number" [(ngModel)]="usuario.telefone" formControlName="telefone" class="form-control required" name="telefone" numeric pInputText placeholder="Ex.: 83988887777" required>
                         <ng-container *ngIf="formCadastro.controls.telefone.touched">
                         <small *ngIf="formCadastro.controls.telefone.errors?.required" class="p-error" style="font-style: italic;" >
                             Campo obrigatório
                           </small>
-                        </ng-container>  
+                        </ng-container>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="form-item ">
-                        <label>Senha*</label>
+                        <label>Senha*<small> (mínimo 6 caracteres)</small> </label>
                         <input [(ngModel)]="usuario.senha" formControlName="senha" class="form-control required" name="senha" type="password" pInputText placeholder="*****" required>
                         <ng-container *ngIf="formCadastro.controls.telefone.touched">
                         <small *ngIf="formCadastro.controls.senha.errors?.required" class="p-error" style="font-style: italic;" >
@@ -100,10 +109,10 @@
             </div>
             <br>
             <small class="p-error">*Campos obrigatórios</small>
-   
+
         </div>
     </article>
-    <button (click)="onSubmit()" [disabled]="!formCadastro.valid" type="submit" class="btn btn-success bt-page" routerLink="/usuarios"><i class="fas fa-save"></i> Salvar</button>
+    <button [disabled]="!formCadastro.valid" type="button" class="btn btn-success bt-page" routerLink="/usuarios" (click)="onSubmit()"><i class="fas fa-save"></i> Salvar</button>
     <button (click)="cancelarCadastro()" type="button" class="btn btn-danger bt-page-cancel" routerLink="/usuarios"><i class="fas fa-ban"></i> Cancelar</button>
 </form>
 </main>

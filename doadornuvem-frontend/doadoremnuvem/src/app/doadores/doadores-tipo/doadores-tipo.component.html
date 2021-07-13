@@ -1,0 +1,53 @@
+<main>
+    <header class="page-header">
+      <h1><i class="fas fa-user-friends"></i> Lista de Doadores por tipo sanguíneo </h1>
+    </header>
+  <p-toast></p-toast>
+      <div class="card">
+        <p-toolbar styleClass="p-mb-4">
+            <ng-template pTemplate="left">
+              <span class="p-input-icon-left p-ml-auto">
+                <p-dropdown placeholder="Selecione o tipo" [options]="tiposSaguineos" [(ngModel)]="selectedTipo" optionLabel="nome"></p-dropdown>
+                &nbsp;
+                <button (click)="listarDoaresTipo()" pTooltip="Pesquisar por tipo selecionado" tooltipPosition="bottom" pButton pRipple label="Pesquisar" icon="pi pi-search"
+                    class="p-button-secondary p-mr-2 p-d-inline-block">
+                </button>
+                &nbsp;
+                <button (click)="enviarNotificacao()" pTooltip="Enviar Notificacão para os doadores listados" tooltipPosition="bottom" pButton pRipple label="Enviar Notificacão"  icon="fab fa-whatsapp"
+                class="p-button-primary p-mr-2 p-d-inline-block">
+            </button>
+              </span>
+            </ng-template>
+          </p-toolbar>
+        <p-table #dt [value]="doadores" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+        [paginator]="true" [rowsPerPageOptions]="[10,25,50]">
+          <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 8rem" pSortableColumn="registro">Registro<p-sortIcon field="doadores.registro"></p-sortIcon></th>
+            <th pSortableColumn="nome">Nome<p-sortIcon field="doadores.nome"></p-sortIcon></th>
+            <th style="width: 6rem" pSortableColumn="grupoabo">Tipo <p-sortIcon field="doadores.grupoabo"></p-sortIcon></th>
+            <th pSortableColumn="dtnasc">Data Nasc. <p-sortIcon field="doadores.dtnasc"></p-sortIcon></th>
+            <th style="width: 8rem">Celular</th>
+            <th style="width: 8rem" pSortableColumn="data_proxima_doacao">Próxima doação <p-sortIcon field="doadores.data_proxima_doacao"></p-sortIcon></th>
+            <th scope="col">Permite Notificacão</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-d>
+          <!-- <tr  *ngFor="let d of doadores; index as i">         -->
+            <tr>
+            <td> {{ d.registro }}</td>
+            <td>{{ d.nome }}</td>
+            <td>{{ d.grupoabo + (d.fatorrh
+              | replace : 'P' : '+'
+              | replace : 'N' : '-')}}</td>
+            <td>{{ d.dtnasc | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ d.celular }}</td>
+            <td> {{ d.data_proxima_doacao | date: 'dd/MM/yyyy' }}</td>
+            <td><h5><p-selectButton [options]="permNotiOpcoes" [(ngModel)]="d.permissao_notificacao" optionLabel="label" optionValue="value" (onChange)="atualizarPermissaoNotificacao(d.registro, $event)"></p-selectButton></h5></td>
+          </tr>
+        </ng-template>
+        </p-table>
+        <div *ngIf="doadores.length == 0 && pesquisaZerada == true"> Nenhum doador encontrado.</div>
+    </div>
+    </main>
