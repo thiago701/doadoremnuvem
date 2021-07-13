@@ -23,6 +23,7 @@ export class DoadoresTipoComponent implements OnInit{
   pesquisaZerada : boolean;
   public doadores: Array<Doador> = [];
   permNotiOpcoes: any[];
+  registrosDoadores : Array<string> = [];
 
   constructor(
     private doadorService: DoadorService) {
@@ -53,8 +54,11 @@ export class DoadoresTipoComponent implements OnInit{
       this.doadores = data;
       if (this.doadores.length == 0)
         this.pesquisaZerada = true;
-      else
+      else{
         this.pesquisaZerada = false;
+       // console.log(this.doadores[0].registro);
+      }
+        
     },
     (err) => {
       console.log(err);
@@ -63,7 +67,14 @@ export class DoadoresTipoComponent implements OnInit{
 }
 
 enviarNotificacao(){
-  // TODO
+  
+  if (this.doadores.length > 0){
+    for (let i: number = 0; i < this.doadores.length; i++){
+      this.registrosDoadores.push(this.doadores[i].registro.toString());
+    }
+  }
+  //console.log(this.registrosDoadores.toString())
+  this.doadorService.notificarDoadorPorCodigo(this.registrosDoadores);
 }
 
 }

@@ -28,6 +28,7 @@ export class DoadoresLocalidadeComponent implements OnInit {
   public bairrosDoadores:Array<Bairro> = [];
   nomeCidade : string;
   nomeBairro : string;
+  registrosDoadores : Array<string> = [];
 
   constructor(private doadorService: DoadorService) {
     this.pesquisaZerada = false;
@@ -84,6 +85,12 @@ export class DoadoresLocalidadeComponent implements OnInit {
   }
 
   enviarNotificacao(){
-    // TODO
+    if (this.doadores.length > 0){
+      for (let i: number = 0; i < this.doadores.length; i++){
+        this.registrosDoadores.push(this.doadores[i].registro.toString());
+      }
+    }
+    //console.log(this.registrosDoadores.toString())
+    this.doadorService.notificarDoadorPorCodigo(this.registrosDoadores);
   }
 }
