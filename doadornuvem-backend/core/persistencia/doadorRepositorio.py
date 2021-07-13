@@ -84,6 +84,15 @@ def listarDoadoresParaNotificarPrimeiraVezBD(mongodb):
     collection = con[mongodb.collection_doador]
     return list(collection.find({'data_ultima_notificacao': ''}))[0:100]
 
+def listarDoadoresPorCodigos(codigos, mongodb):
+    con = conexaoBanco(mongodb)
+    collection = con[mongodb.collection_doador]
+    lista = list()
+    for cod in codigos:
+        print('cod:', cod)
+        lista.append(list(collection.find({'registro': cod })))
+    return lista
+
 def listarDoadoresParaNotificaMasculinoBD(mongodb):
     con = conexaoBanco(mongodb)
     collection = con[mongodb.collection_doador]

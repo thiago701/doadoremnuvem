@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Doador} from '../Doador';
 import {DoadorService} from '../doador.service';
+import {MessageService} from "primeng/api";
 
 interface Cidade{
   nome: string,
@@ -30,7 +31,7 @@ export class DoadoresLocalidadeComponent implements OnInit {
   nomeBairro : string;
   registrosDoadores : Array<string> = [];
 
-  constructor(private doadorService: DoadorService) {
+  constructor(private doadorService: DoadorService, private messageService: MessageService) {
     this.pesquisaZerada = false;
     this.permNotiOpcoes = [{label: 'Não', value: false}, {label: 'Sim', value: true}];
     this.cidades =[
@@ -73,24 +74,25 @@ export class DoadoresLocalidadeComponent implements OnInit {
 
   listarBairrosByCidade(){
     if (this.selectedCidade != null){
-      
+
     this.nomeCidade = this.selectedCidade.nomeBD;
     this.doadorService.listarBairroPorCidade(this.nomeCidade).subscribe(data =>{
       this.bairrosDoadores = data;
     },
     (err) => {
       console.log(err);
-    });    
+    });
     }
   }
 
-  enviarNotificacao(){
+  enviarNotificacao() {
+    this.registrosDoadores = [];
     if (this.doadores.length > 0){
       for (let i: number = 0; i < this.doadores.length; i++){
         this.registrosDoadores.push(this.doadores[i].registro.toString());
       }
     }
-    //console.log(this.registrosDoadores.toString())
-    this.doadorService.notificarDoadorPorCodigo(this.registrosDoadores);
+    this.doadorService.notificarDoadorPorCodigo(this.registrosDoadores, 'localidade');
+    this.messageService.add({severity:'success', summary:'Operação realizada', detail:'Notificação em andamento...'});
   }
 }

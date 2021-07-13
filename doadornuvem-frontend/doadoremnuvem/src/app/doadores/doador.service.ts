@@ -35,11 +35,11 @@ export class DoadorService {
 
   listarBairroPorCidade(cidade:string):Observable<Array<Doador>>{
     const url = environment.apiUrl + environment.get_bairro_cidade + cidade;
-    return this.http.get<any>(url);  
+    return this.http.get<any>(url);
   }
 
-  notificarDoadorPorCodigo(registros: Array<string>){
-    const url = environment.apiUrl + environment.get_notificacao_por_codigo + registros;
-
+  notificarDoadorPorCodigo(registros: Array<string>, tipo_msg: string){
+    const url = environment.apiUrl + environment.get_notificacao_por_codigo + registros + '/' + tipo_msg;
+    return this.http.get<any>(url);
   }
 }
