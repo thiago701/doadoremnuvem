@@ -17,6 +17,7 @@ export const environment = {
   get_doador_tipo: '/doadores/listar-por-tipo/',
   get_doador_localidade:'/doadores/listar-por-localidade/',
   get_bairro_cidade:'/doadores/listar-bairro-por-cidade/',
+  get_notificacao_por_codigo:'api/notificar-por-codigos/<codigos>',
   get_mensagem_listar: '/mensagens/listar',
   get_atualizar_mensagem: '/mensagens/editar-mensagens-notificacao/',
 
