@@ -5,13 +5,13 @@
 
 <div class="card">
     <div *ngIf="historico.length == 0">Nenhum registro encontrado.</div>
-    <p-table #dt [value]=historico [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" 
+    <p-table #dt [value]=historico [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
     [paginator]="true" [rowsPerPageOptions]="[10,25,50]"
       [globalFilterFields]="['dt_operacao','status','tp_operacao', 'qt_doadores_notificados','ds_log']"
-    
+
     >
       <ng-template pTemplate="caption">
-        <div class="header">            
+        <div class="header">
           <span class="p-input-icon-left p-ml-auto">
             <i class="pi pi-search"></i>
             <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
@@ -32,7 +32,7 @@
           </th>
           <th pSortableColumn="ds_log">Log <p-sortIcon field="historico.ds_log"></p-sortIcon>
           </th>
-          <th style="width: 5rem">Ações</th> 
+          <!--th style="width: 5rem">Ações</th-->
         </tr>
         </ng-template>
 
@@ -44,12 +44,12 @@
           <td>{{ h.tp_operacao }}</td>
           <td>{{ h.qt_doadores_notificados }}</td>
           <td>{{ h.ds_log }}</td>
-          <td>
-            <button pTooltip="Repetir envio" tooltipPosition="bottom" type="button" 
+          <!--td>
+            <button pTooltip="Repetir envio" tooltipPosition="bottom" type="button"
             pButton pRipple icon="fas fa-reply-all" class="p-button-rounded p-button-warning"
             routerLink="/historico" *ngIf="h.status === 'FALHA'"
               (click)="reprocessarFalha(h)"></button>
-          </td>
+          </td-->
         </tr>
       </ng-template>
     </p-table>

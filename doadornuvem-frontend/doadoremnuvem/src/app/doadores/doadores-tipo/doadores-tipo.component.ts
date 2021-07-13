@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {Doador} from '../Doador';
 import {DoadorService} from '../doador.service';
 import { Table } from 'primeng/table';
+import {MessageService} from "primeng/api";
 
 interface TipoSague{
   nome: string,
@@ -23,8 +24,10 @@ export class DoadoresTipoComponent implements OnInit{
   pesquisaZerada : boolean;
   public doadores: Array<Doador> = [];
   permNotiOpcoes: any[];
+  registrosDoadores : Array<string> = [];
 
   constructor(
+    private messageService: MessageService,
     private doadorService: DoadorService) {
       this.pesquisaZerada = false;
       this.permNotiOpcoes = [{label: 'Não', value: false}, {label: 'Sim', value: true}];
@@ -44,26 +47,37 @@ export class DoadoresTipoComponent implements OnInit{
   }
 
   listarDoaresTipo(){
-    
+
     if (this.selectedTipo != null){
-    
+
     this.grupoAbo = this.selectedTipo.abo;
     this.fator = this.selectedTipo.fator;
     this.doadorService.listarDoadoresPorTipo(this.grupoAbo, this.fator).subscribe(data =>{
       this.doadores = data;
       if (this.doadores.length == 0)
         this.pesquisaZerada = true;
-      else
+      else{
         this.pesquisaZerada = false;
+       // console.log(this.doadores[0].registro);
+      }
+
     },
     (err) => {
       console.log(err);
-    });    
+    });
   }
 }
 
-enviarNotificacao(){
-  // TODO
+enviarNotificacao() {
+
+  this.registrosDoadores = [];
+  if (this.doadores.length > 0){
+    for (let i: number = 0; i < this.doadores.length; i++){
+      this.registrosDoadores.push(this.doadores[i].registro.toString());
+    }
+  }
+  this.doadorService.notificarDoadorPorCodigo(this.registrosDoadores, 'tipo').subscribe(data => data);
+  this.messageService.add({severity:'success', summary:'Operação realizada', detail:'Notificação em andamento...'});
 }
 
 }
