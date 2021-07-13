@@ -73,6 +73,28 @@ atexit.register(lambda: scheduler.shutdown())
 
 """ SERVIÇOS """
 
+@app.route('/api/notificar-por-codigos/<codigos>', methods=['GET', 'POST'])
+def notificarPorCodigos(codigos):
+    print('codigos:',codigos)
+    codigos = list(codigos)
+    print('codigos:', codigos)
+    mensagensConfig = listarMensagensBD(MongoDBConf())
+    doadores = listarDoadoresPorCodigos(codigos, MongoDBConf())
+    print('qtd doadores por codigo:', doadores)
+    for doador in doadores:
+        contatos_df = pd.DataFrame({
+            'Pessoa': doador['nome'],
+            'Número': doador['celular'],
+            'Mensagem': [mensagensConfig[0]['msg_notifica_geral']]})
+        # atualiza data ultima notificacao
+        editarUltimaNotificacaoDoadorBD(doador['registro'], str(datetime.date.today()), MongoDBConf())
+        # notifica whatsapp
+        enviaNotificacao(contatos_df)
+        # SUCESSO
+        salvarHistoricoBD('SUCESSO', 'NOTIFICACAO_APTOS', '', 1, MongoDBConf())
+
+    return 'Notificado com sucesso!'
+
 # Teste
 @app.route('/api/notificar', methods=['GET', 'POST'])
 def notificarWhatsapp():
